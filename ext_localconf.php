@@ -54,4 +54,12 @@ defined('TYPO3') || die();
             }
        }'
     );
+
+    $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
+
+    $iconRegistry->registerIcon(
+        'module-nst3dev',
+        \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+        ['source' => 'EXT:ns_t3dev/Resources/Public/Icons/module-nitsan.svg']
+    );
 })();

@@ -76,3 +76,13 @@ plugin.tx_nst3dev._CSS_DEFAULT_STYLE (
         color:green;
     }
 )
+
+# Module configuration
+module.tx_nst3dev {
+    view {
+        templateRootPaths.1 = {$module.tx_nst3dev.view.templateRootPath}
+        partialRootPaths.1 = {$module.tx_nst3dev.view.partialRootPath}
+        layoutRootPaths.1 = {$module.tx_nst3dev.view.layoutRootPath}
+    }
+}
+

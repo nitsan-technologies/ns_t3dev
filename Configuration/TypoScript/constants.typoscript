@@ -26,3 +26,13 @@ plugin.tx_nst3dev_show {
         storagePid =
     }
 }
+module.tx_nst3dev {
+    view {
+        # cat=module.tx_nst3dev/file; type=string; label=Path to template root (BE)
+        templateRootPath = EXT:ns_t3dev/Resources/Private/Backend/Templates/ProductArea/
+        # cat=module.tx_nst3dev/file; type=string; label=Path to template partials (BE)
+        partialRootPath = EXT:ns_t3dev/Resources/Private/Backend/Partials/ProductArea/
+        # cat=module.tx_nst3dev/file; type=string; label=Path to template layouts (BE)
+        layoutRootPath = EXT:ns_t3dev/Resources/Private/Backend/Layouts/ProductArea/
+    }
+}

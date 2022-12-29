@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace NITSAN\NsT3dev\Controller;
 
-
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * This file is part of the "T3 Dev" Extension for TYPO3 CMS.
  *
@@ -116,5 +116,91 @@ class ProductAreaController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCont
         $this->addFlashMessage('The object was deleted. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/p/friendsoftypo3/extension-builder/master/en-us/User/Index.html', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
         $this->productAreaRepository->remove($productArea);
         $this->redirect('list');
+    }
+
+    public function dashboardAction(){
+        if(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('gridelements')){
+            $grids = $this->productAreaRepository->getGrids();
+            if($grids){
+                $assign = [
+                    'action' => 'dashboard',
+                    'extension' => 'gridelements',
+                ];
+                $this->view->assignMultiple($assign);
+            }            
+        }
+        else{
+            $assign = [
+                'action' => 'dashboard',
+                'extension' => '',
+            ];
+            $this->view->assignMultiple($assign);
+        }
+
+    }
+
+    public function executeMigrationAction(){
+        $grids = $this->productAreaRepository->getGrids();
+        if($grids){
+            $result = $this->productAreaRepository->executeUpdate();
+            if($result){
+                $assign = [
+                    'action' => 'executeMigration',
+                    'result' => $result,
+                ];
+            }
+        }
+        else{
+            $assign = [
+                'action' => 'executeMigration',
+                'result' => '',
+            ];
+        
+        }
+        $this->view->assignMultiple($assign);
+    }
+
+    public function specificGridMigrateAction(){
+        $gridelementsElements = $this->productAreaRepository->findGridelements();
+        if(empty($gridelementsElements)){
+                $assign = [
+                    'action' => 'executeMigration',
+                    'grid' => '',
+                ];
+        }
+        else{
+
+            $gridElementsArray=[];
+            $layoutColumns = [];
+            foreach ($gridelementsElements as $gridElement) {
+                
+                $columnElement = $this->productAreaRepository->findContentfromGridElements($gridElement['uid']);
+                if($columnElement) {
+                    $columnElementFlip = array_fill_keys(array_column($columnElement, 'tx_gridelements_columns'), '1');
+                    if(!isset($layoutColumns[$gridElement['tx_gridelements_backend_layout']])) $layoutColumns[$gridElement['tx_gridelements_backend_layout']] = [];
+                    if(array_diff_assoc($columnElementFlip, $layoutColumns[$gridElement['tx_gridelements_backend_layout']])) {
+                        $gridElementsArray[$gridElement['tx_gridelements_backend_layout']] = $gridElement;
+                        $layoutColumns[$gridElement['tx_gridelements_backend_layout']] += $columnElementFlip;
+                    }
+                }
+            }
+            $assign = [
+                "gridelementsElements" => $gridElementsArray,
+                "layoutColumns" => $layoutColumns,
+                "grid" => "find",
+            ];
+        }
+        $this->view->assignMultiple($assign);
+    }
+
+    public function processMirgrateAction(){
+        $arguments = $this->request->getArguments();
+        $migrateAllElements = $this->productAreaRepository->updateAllElements($arguments['migrategeneral']['elements']);
+        $this->view->assignMultiple(
+            array(
+                "arguments" => $arguments,
+                "migrateAllElements" => $migrateAllElements
+            )
+        );
     }
 }
