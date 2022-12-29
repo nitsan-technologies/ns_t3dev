@@ -18,6 +18,12 @@
 			<trans-unit id="tx_nst3dev_domain_model_productarea.slug" resname="tx_nst3dev_domain_model_productarea.slug">
 				<source>Slug</source>
 			</trans-unit>
+			<trans-unit id="scheduler.csvpath">
+                <source>CSV File Path</source>
+            </trans-unit>
+			<trans-unit id="scheduler.pid">
+                <source>Parent ID</source>
+            </trans-unit>
 		</body>
 	</file>
 </xliff>

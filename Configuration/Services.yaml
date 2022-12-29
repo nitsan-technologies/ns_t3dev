@@ -1,0 +1,13 @@
+services:
+  # general settings
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+    
+  NITSAN\NsT3dev\Command\ImportCommand:
+    tags:
+      - name: 'console.command'
+        command: 'nst3dev:scheduler'
+        description: 'test'
+        schedulable: true
