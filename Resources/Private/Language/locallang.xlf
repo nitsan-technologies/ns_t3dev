@@ -18,6 +18,9 @@
 			<trans-unit id="tx_nst3dev_domain_model_productarea.slug" resname="tx_nst3dev_domain_model_productarea.slug">
 				<source>Slug</source>
 			</trans-unit>
+			<trans-unit id="module.name" resname="module.name">
+				<source>Your Module</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
