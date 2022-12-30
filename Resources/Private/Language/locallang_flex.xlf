@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="EXT:ns_t3dev/Resources/Private/Language/locallang_flex" date="2022-12-02T06:43:58Z" product-name="ns_t3dev">
+		<header/>
+		<body>
+			<trans-unit id="listing.sheet_title" resname="listing.sheet_title">
+				<source>Product Listing</source>
+			</trans-unit>
+			<trans-unit id="listing.detailPageId" resname="listing.detailPageId">
+				<source>Product Detail PageId</source>
+			</trans-unit>
+			<trans-unit id="listing.itemsPerPage" resname="listing.itemsPerPage">
+				<source>Product Per Page</source>
+			</trans-unit>
+			<trans-unit id="listing.paginationType" resname="listing.paginationType">
+				<source>Pagination type</source>
+			</trans-unit>
+			<trans-unit id="listing.paginationType_loadMore" resname="listing.paginationType_loadMore">
+				<source>Load more</source>
+			</trans-unit>
+			<trans-unit id="listing.paginationType_numbered" resname="listing.paginationType_numbered">
+				<source>Numbered Pagination</source>
+			</trans-unit>
+			<trans-unit id="details.sheet_title" resname="details.sheet_title">
+				<source>Product details</source>
+			</trans-unit>
+			<trans-unit id="details.listPageId" resname="details.listPageId">
+				<source>Product List PageId</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

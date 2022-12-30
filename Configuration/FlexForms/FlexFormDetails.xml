@@ -1,0 +1,25 @@
+<T3DataStructure>
+	<sheets>
+		<sDEF>
+			<ROOT>
+				<TCEforms>
+					<sheetTitle>LLL:EXT:ns_t3dev/Resources/Private/Language/locallang_flex.xlf:details.sheet_title</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+					<settings.listPageId>
+						<TCEforms>
+							<label>LLL:EXT:ns_t3dev/Resources/Private/Language/locallang_flex.xlf:details.listPageId</label>
+							<config>
+								<type>group</type>
+								<internal_type>db</internal_type>
+								<allowed>pages</allowed>
+								<maxitems>1</maxitems>
+							</config>
+						</TCEforms>
+					</settings.listPageId>
+				</el>
+			</ROOT>
+		</sDEF>
+	</sheets>
+</T3DataStructure>

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace NITSAN\NsT3dev\Controller;
 
+use TYPO3\CMS\Core\Pagination\SimplePagination;
+use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
 
 /**
  * This file is part of the "T3 Dev" Extension for TYPO3 CMS.
@@ -35,6 +37,7 @@ class ProductAreaController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCont
         $this->productAreaRepository = $productAreaRepository;
     }
 
+
     /**
      * action list
      *
@@ -43,6 +46,20 @@ class ProductAreaController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCont
     public function listAction(): \Psr\Http\Message\ResponseInterface
     {
         $productAreas = $this->productAreaRepository->findAll();
+        $currentPage = $this->request->hasArgument('currentPage')
+            ? (int)$this->request->getArgument('currentPage')
+            : 1;
+        $itemsPerPage = $this->settings['itemsPerPage'];
+        $maximumLinks = 15;
+        $paginator = new QueryResultPaginator($productAreas,$currentPage,intval($itemsPerPage));
+        $pagination = new SimplePagination($paginator,$maximumLinks);
+        $this->view->assign(
+            'pagination',
+            [
+                'pagination' => $pagination,
+                'paginator' => $paginator,
+            ]
+        );
         $this->view->assign('productAreas', $productAreas);
         return $this->htmlResponse();
     }
@@ -66,6 +83,7 @@ class ProductAreaController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCont
      */
     public function newAction(): \Psr\Http\Message\ResponseInterface
     {
+        \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($this, __FILE__.' Line'.__LINE__);die;
         return $this->htmlResponse();
     }
 
@@ -117,4 +135,15 @@ class ProductAreaController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCont
         $this->productAreaRepository->remove($productArea);
         $this->redirect('list');
     }
+
+    /**
+     * action validation
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function validationAction(): \Psr\Http\Message\ResponseInterface
+    {
+        return $this->htmlResponse();
+    }
+
 }

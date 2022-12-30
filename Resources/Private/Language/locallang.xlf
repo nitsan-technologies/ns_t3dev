@@ -18,6 +18,9 @@
 			<trans-unit id="tx_nst3dev_domain_model_productarea.slug" resname="tx_nst3dev_domain_model_productarea.slug">
 				<source>Slug</source>
 			</trans-unit>
+			<trans-unit id="widget.pagination.load_more" resname="widget.pagination.load_more">
+				<source>Load more</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

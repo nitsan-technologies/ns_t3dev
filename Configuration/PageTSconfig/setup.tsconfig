@@ -1,0 +1,34 @@
+mod {
+    wizards.newContentElement.wizardItems.plugins {
+        elements {
+            listing {
+                iconIdentifier = ns_t3dev-plugin-listing
+                title = LLL:EXT:ns_t3dev/Resources/Private/Language/locallang_db.xlf:tx_ns_t3dev_listing.name
+                description = LLL:EXT:ns_t3dev/Resources/Private/Language/locallang_db.xlf:tx_ns_t3dev_listing.description
+                tt_content_defValues {
+                    CType = list
+                    list_type = nst3dev_listing
+                }
+            }
+            show {
+                iconIdentifier = ns_t3dev-plugin-show
+                title = LLL:EXT:ns_t3dev/Resources/Private/Language/locallang_db.xlf:tx_ns_t3dev_show.name
+                description = LLL:EXT:ns_t3dev/Resources/Private/Language/locallang_db.xlf:tx_ns_t3dev_show.description
+                tt_content_defValues {
+                    CType = list
+                    list_type = nst3dev_show
+                }
+            }
+            validation {
+                iconIdentifier = ns_t3dev-plugin-validation
+                title = LLL:EXT:ns_t3dev/Resources/Private/Language/locallang_db.xlf:tx_ns_t3dev_validation.name
+                description = LLL:EXT:ns_t3dev/Resources/Private/Language/locallang_db.xlf:tx_ns_t3dev_validation.description
+                tt_content_defValues {
+                    CType = list
+                    list_type = nst3dev_validation
+                }
+            }
+        }
+        show = *
+    }
+}

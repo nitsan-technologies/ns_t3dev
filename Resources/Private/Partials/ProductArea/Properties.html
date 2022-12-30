@@ -7,16 +7,14 @@
 	<tr>
 		<td><f:translate key="tx_nst3dev_domain_model_productarea.image" /></td>
 		<td>
+			<f:if condition="{productArea.image}">
 				<f:image src="{productArea.image.originalResource.publicUrl}" width="200"/>
-            </td>
+			</f:if>
+        </td>
 	</tr>
 	<tr>
 		<td><f:translate key="tx_nst3dev_domain_model_productarea.description" /></td>
-		<td>{productArea.description}</td>
-	</tr>
-	<tr>
-		<td><f:translate key="tx_nst3dev_domain_model_productarea.slug" /></td>
-		<td>{productArea.slug}</td>
+		<td><f:format.html>{productArea.description}</f:format.html></td>
 	</tr>
 </table>
 </html>

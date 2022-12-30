@@ -6,7 +6,7 @@
                 <f:for each="{validationResults.flattenedErrors}" key="propertyPath" as="errors">
                     <f:for each="{errors}" as="error">
                         <li>
-                            {error}
+                            <div class="alert alert-danger" role="alert">{error}</div>
                         </li>
                     </f:for>
                 </f:for>
