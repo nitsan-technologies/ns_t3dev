@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace NITSAN\NsT3dev\Controller;
 
+use NITSAN\NsT3dev\Domain\Repository\FrontendUserRepository;
 
 /**
  * This file is part of the "T3 Dev" Extension for TYPO3 CMS.
@@ -36,6 +37,22 @@ class ProductAreaController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCont
     }
 
     /**
+	 * User Repository
+	 *
+	 * @var \NITSAN\NsT3dev\Domain\Repository\FrontendUserRepository
+	 */
+	protected $userRepository;
+
+    /**
+	 * Inject a news repository to enable DI
+	 *
+	 * @param \NITSAN\NsT3dev\Domain\Repository\FrontendUserRepository $userRepository
+	 */
+	public function injectUserRepository(FrontendUserRepository $userRepository)
+	{
+		$this->userRepository = $userRepository;
+	}
+    /**
      * action list
      *
      * @return \Psr\Http\Message\ResponseInterface
@@ -43,7 +60,10 @@ class ProductAreaController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCont
     public function listAction(): \Psr\Http\Message\ResponseInterface
     {
         $productAreas = $this->productAreaRepository->findAll();
+        $GLOBALS['TSFE']->fe_user->user['uid'] = isset($GLOBALS['TSFE']->fe_user->user['uid']) ? $GLOBALS['TSFE']->fe_user->user['uid'] : '';
+		$user = $this->userRepository->findByUid($GLOBALS['TSFE']->fe_user->user['uid']) ?? null;
         $this->view->assign('productAreas', $productAreas);
+        $this->view->assign('user', $user);
         return $this->htmlResponse();
     }
 

@@ -6,7 +6,17 @@
     <f:if condition="!{validationResults.flattenedErrors}">
       <f:flashMessages />
     </f:if>
-      
+
+    <f:if condition="{user}">
+        <f:then>
+            <f:form action="" addQueryString="1">
+                <h3>Login user is: {user.name} </h3>
+            </f:form>
+        </f:then>
+        <f:else>
+            <h3>User is not Login</h3>
+        </f:else>
+    </f:if>
 
     <table class="tx_nst3dev">
         <tr>
