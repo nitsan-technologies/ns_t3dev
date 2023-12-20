@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace NITSAN\NsT3dev\Domain\Repository;
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * This file is part of the "T3 Dev" Extension for TYPO3 CMS.
@@ -19,4 +20,6 @@ namespace NITSAN\NsT3dev\Domain\Repository;
  */
 class ProductAreaRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
+
+
 }

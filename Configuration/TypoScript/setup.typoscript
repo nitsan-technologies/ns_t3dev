@@ -20,6 +20,21 @@ plugin.tx_nst3dev_listing {
         #callDefaultActionIfActionCantBeResolved = 1
     }
 }
+plugin.tx_form {
+    settings {
+        yamlConfigurations {
+            234234 = EXT:ns_t3dev/Configuration/Form/setup.yaml
+        }
+    }
+}
+module.tx_form {
+    settings {
+        yamlConfigurations {
+            1234445 = EXT:ns_t3dev/Configuration/Form/setup.yaml
+        }
+    }
+}
+
 plugin.tx_nst3dev_show {
     view {
         templateRootPaths.0 = EXT:ns_t3dev/Resources/Private/Templates/

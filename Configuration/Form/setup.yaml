@@ -1,0 +1,152 @@
+TYPO3:
+  CMS:
+    Form:
+      formManager:
+        translationFiles:
+          13: 'EXT:ns_t3dev/Resources/Private/Language/locallang.xlf'
+      prototypes:
+        standard:
+          formEditor:
+            dynamicRequireJsModules:
+                additionalViewModelModules:
+                  1588750194: 'TYPO3/CMS/NsT3dev/Backend/FormEditor/CaptchaViewModel'
+            formEditorPartials:
+              FormElement-Captcha: Stage/SimpleTemplate
+            translationFiles:
+              11: 'EXT:ns_t3dev/Resources/Private/Language/locallang.xlf'
+          formEngine:
+            translationFiles:
+              11: 'EXT:ns_t3dev/Resources/Private/Language/locallang.xlf'
+          formElementsDefinition:
+            Form:
+              formEditor:
+                editors:
+                  900:
+                    identifier: finishers
+                    templateName: Inspector-FinishersEditor
+                    label: formEditor.elements.Form.editor.finishers.label
+                    selectOptions:
+                      70:
+                        value: Savedata
+                        label: formEditor.elements.Form.editor.finishers.Savedata.label
+                propertyCollections:
+                  finishers:
+                    90:
+                        identifier: Savedata
+                        editors:
+                          100:
+                            identifier: header
+                            templateName: Inspector-CollectionElementHeaderEditor
+                            label: formEditor.elements.Form.finisher.Savedata.editor.header.label
+                          9999:
+                            identifier: removeButton
+                            templateName: Inspector-RemoveElementEditor
+              renderingOptions:
+                partialRootPaths:
+                  01: 'EXT:ns_t3dev/Resources/Private/Frontend/Partials/'
+                translation:
+                  translationFiles:
+                    1: 'EXT:ns_t3dev/Resources/Private/Language/locallang.xlf'
+            Text:
+              formEditor:
+                editors:
+                  520:
+                    identifier: additionalClass
+                    templateName: Inspector-TextEditor
+                    label: formEditor.elements.TextMixin.editor.additionalClass.label
+                    propertyPath: properties.elementClassAttribute
+            Captcha:
+              formEditor:
+                editors:
+                  100:
+                    identifier: header
+                    templateName: Inspector-FormElementHeaderEditor
+                  200:
+                    identifier: label
+                    templateName: Inspector-TextEditor
+                    label: formEditor.elements.FormElement.editor.label.label
+                    propertyPath: label
+                  230:
+                    identifier: elementDescription
+                    templateName: Inspector-TextEditor
+                    label: formEditor.elements.FormElement.editor.elementDescription.label
+                    propertyPath: properties.elementDescription
+                  400:
+                    identifier: placeholder
+                    templateName: Inspector-TextEditor
+                    label: formEditor.elements.TextMixin.editor.placeholder.label
+                    propertyPath: properties.fluidAdditionalAttributes.placeholder
+                    doNotSetIfPropertyValueIsEmpty: true
+                  900:
+                    identifier: validators
+                    templateName: Inspector-ValidatorsEditor
+                    label: formEditor.elements.TextMixin.editor.validators.label
+                    selectOptions:
+                      10:
+                        value: ''
+                        label: formEditor.elements.TextMixin.editor.validators.EmptyValue.label
+                      90:
+                        value: CompareCaptcha
+                        label: formEditor.elements.TextMixin.editor.validators.CaptchaCompare.label
+                  9999:
+                    identifier: removeButton
+                    templateName: Inspector-RemoveElementEditor
+                predefinedDefaults:
+                  defaultValue: ''
+                propertyCollections:
+                  validators:
+                    80:
+                      identifier: CompareCaptcha
+                      editors:
+                        100:
+                          identifier: header
+                          templateName: Inspector-CollectionElementHeaderEditor
+                          label: formEditor.elements.TextMixin.validators.CaptchaCompare.editor.header.label
+                        200:
+                          identifier: captchaCompare
+                          templateName: Inspector-TextEditor
+                          label: formEditor.elements.TextMixin.validators.CaptchaCompare.editor.regex.label
+                          propertyPath: options.captchaCompare
+                          propertyValidators:
+                            10: NotEmpty
+                        300:
+                          identifier: validationErrorMessage
+                          templateName: Inspector-ValidationErrorMessageEditor
+                          label: formEditor.elements.TextMixin.validators.CaptchaCompare.editor.validationErrorMessage.label
+                          errorCodes:
+                            10: 1221565130
+                          propertyPath: properties.validationErrorMessages
+                        9999:
+                          identifier: removeButton
+                          templateName: Inspector-RemoveElementEditor
+                label: formEditor.elements.Captch.label
+                group: input
+                groupSorting: 100
+                iconIdentifier: form-text
+              implementationClassName: TYPO3\CMS\Form\Domain\Model\FormElements\GenericFormElement
+              properties:
+                containerClassAttribute: input
+                elementClassAttribute: ''
+                elementErrorClassAttribute: error
+          finishersDefinition:
+            Savedata:
+              implementationClassName: NITSAN\NsT3dev\Domain\Finishers\SavedataFinisher
+              formEditor:
+                iconIdentifier: form-finisher
+                label: formEditor.elements.Form.finisher.Savedata.editor.header.label
+          validatorsDefinition:
+            CompareCaptcha:
+              implementationClassName: NITSAN\NsT3dev\Domain\Validator\CompareCaptchaValidator
+              formEditor:
+                iconIdentifier: form-validator
+                label: formEditor.elements.TextMixin.editor.validators.CaptchaCompare.label
+                predefinedDefaults:
+                  options:
+                    captchaCompare: ''
+
+                    
+
+
+                    
+
+            

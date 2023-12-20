@@ -18,6 +18,40 @@
 			<trans-unit id="tx_nst3dev_domain_model_productarea.slug" resname="tx_nst3dev_domain_model_productarea.slug">
 				<source>Slug</source>
 			</trans-unit>
+			<trans-unit id="formEditor.elements.TextMixin.editor.additionalClass.label" resname="formEditor.elements.TextMixin.editor.additionalClass.label">
+				<source>Additional Class</source>
+			</trans-unit>
+			<trans-unit id="formEditor.elements.FormElement.editor.compareCaptcha.label" resname="formEditor.elements.FormElement.editor.compareCaptcha.label">
+				<source>Compare Captcha</source>
+			</trans-unit>
+			<trans-unit id="formEditor.elements.Captch.label" resname="formEditor.elements.Captch.label">
+				<source>Captcha</source>
+			</trans-unit>
+			<trans-unit id="formEditor.elements.Form.editor.finishers.Savedata.label" resname="formEditor.elements.Form.editor.finishers.Savedata.label">
+				<source>SaveData (Add to database)</source>
+			</trans-unit>
+			<trans-unit id="formEditor.elements.Form.finisher.Savedata.editor.header.label" resname="formEditor.elements.Form.finisher.Savedata.editor.header.label">
+				<source>SaveData</source>
+			</trans-unit>
+			<trans-unit id="formEditor.elements.TextMixin.validators.CaptchaCompare.editor.header.label" resname="formEditor.elements.TextMixin.validators.CaptchaCompare.editor.header.label">
+				<source>CaptchaCompare</source>
+			</trans-unit>
+			<trans-unit id="formEditor.elements.TextMixin.validators.CaptchaCompare.editor.header.label" resname="formEditor.elements.TextMixin.validators.CaptchaCompare.editor.header.label">
+				<source>CaptchaCompare</source>
+			</trans-unit>
+			<trans-unit id="formEditor.elements.TextMixin.validators.CaptchaCompare.editor.regex.label" resname="formEditor.elements.TextMixin.validators.CaptchaCompare.editor.regex.label">
+				<source>Captcha Compare Value</source>
+			</trans-unit>
+			<trans-unit id="formEditor.elements.TextMixin.validators.CaptchaCompare.editor.validationErrorMessage.label" resname="formEditor.elements.TextMixin.validators.CaptchaCompare.editor.validationErrorMessage.label">
+				<source>Custom Error Message</source>
+			</trans-unit>
+			<trans-unit id="formEditor.elements.TextMixin.editor.validators.captcha.label" resname="formEditor.elements.TextMixin.editor.validators.captcha.label">
+				<source>Captcha Compare</source>
+			</trans-unit>
+			<trans-unit id="formEditor.elements.TextMixin.editor.validators.CaptchaCompare.label" resname="formEditor.elements.TextMixin.editor.validators.CaptchaCompare.label">
+				<source>Captcha Compare</source>
+			</trans-unit>
+			
 		</body>
 	</file>
 </xliff>
