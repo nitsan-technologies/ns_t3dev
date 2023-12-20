@@ -51,6 +51,9 @@
 			<trans-unit id="formEditor.elements.TextMixin.editor.validators.CaptchaCompare.label" resname="formEditor.elements.TextMixin.editor.validators.CaptchaCompare.label">
 				<source>Captcha Compare</source>
 			</trans-unit>
+			<trans-unit id="system_featured_image" resname="system_featured_image">
+				<source>Featured Image</source>
+			</trans-unit>
 			
 		</body>
 	</file>
