@@ -82,27 +82,6 @@ class ProductArea extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $this->name = $name;
     }
 
-    // /**
-    //  * Returns the image
-    //  *
-    //  * @return \TYPO3\CMS\Extbase\Domain\Model\FileReference
-    //  */
-    // public function getImage()
-    // {
-    //     return $this->image;
-    // }
-
-    // /**
-    //  * Sets the image
-    //  *
-    //  * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $image
-    //  * @return void
-    //  */
-    // public function setImage(\TYPO3\CMS\Extbase\Domain\Model\FileReference $image)
-    // {
-    //     $this->image = $image;
-    // }
-
     /**
      * Returns the description
      *
@@ -151,7 +130,6 @@ class ProductArea extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function __construct()
     {
         // Do not remove the next line: It would break the functionality
-        $this->initializeObject();
         $this->image = new ObjectStorage();
     }
 

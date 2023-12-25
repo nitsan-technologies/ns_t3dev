@@ -20,7 +20,7 @@
                     <div class="row g-0">
                         <div class="col-md-4">
                             <f:if condition="{product.image}">
-                                <f:image image="{product.image.0}" class="img-fluid rounded-start" alt="image" /> 
+                                <f:image image="{product.image.0}" class="img-fluid rounded-start" alt="image" />
                             </f:if>
                         </div>
                         <div class="col-md-8">
@@ -33,6 +33,13 @@
                                     <f:link.action action="show" pageUid="{settings.detailPageId}" arguments="{productArea:product}">Details</f:link.action>
                                 </f:if>
                             </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <f:link.action action="edit" pageUid="{settings.editPageId}" arguments="{productArea:product}">Edit</f:link.action>
+                            <f:link.action action="delete" pageUid="{settings.editPageId}" arguments="{productArea:product}"
+                                           onclick="return confirm('Are you sure to delete?')">Delete</f:link.action>
                         </div>
                     </div>
                 </div>

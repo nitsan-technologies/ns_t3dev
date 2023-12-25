@@ -20,7 +20,7 @@ Otherwise your changes will be overwritten the next time you save the extension 
 
     <f:render partial="FormErrors" />
 
-    <f:form action="update" name="productArea" object="{productArea}" >
+    <f:form action="update" name="productArea" object="{productArea}" enctype="multipart/form-data">
     <f:render partial="ProductArea/FormFields" arguments="{productArea:productArea}" />
     <f:form.submit value="Save" />
     </f:form>
