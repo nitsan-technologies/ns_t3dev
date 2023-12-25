@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace NITSAN\NsT3dev\Domain\Repository;
 
-
-use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 
 /**
  * This file is part of the "T3 Dev" Extension for TYPO3 CMS.
@@ -81,4 +80,5 @@ class ProductAreaRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             ->fetchAllAssociative();
         return count($lastRecord);
     }
+
 }

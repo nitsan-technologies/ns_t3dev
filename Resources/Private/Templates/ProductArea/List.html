@@ -30,7 +30,7 @@
                                     <f:format.html>{product.description -> f:format.crop(maxCharacters: 100)}</f:format.html>
                                 </p>
                                 <f:if condition="{settings.detailPageId}">
-                                    <f:link.action action="show" pageUid="{settings.detailPageId}" arguments="{productArea:product}">Details</f:link.action>
+                                    <f:link.action action="show" pageUid="{settings.detailPageId}" arguments="{productArea:product}" pluginName="Show">Details</f:link.action>
                                 </f:if>
                             </div>
                         </div>
