@@ -1,0 +1,31 @@
+routeEnhancers:
+  NsT3devDetails:
+    type: Extbase
+    extension: NsT3dev
+    plugin: Show
+    routes:
+      - routePath: "/{argument}"
+        _controller: "ProductArea::show"
+        _arguments:
+          argument: productArea
+    aspects:
+      argument:
+        type: PersistedAliasMapper
+        tableName: tx_nst3dev_domain_model_productarea
+        routeFieldName: slug
+  NsT3devListing:
+    type: Extbase
+    extension: NsT3dev
+    plugin: Listing
+    routes:
+      - routePath: "/"
+        _controller: "ProductArea::list"
+      - routePath: "/edit/{argument}"
+        _controller: "ProductArea::edit"
+        _arguments:
+          argument: productArea
+    aspects:
+      argument:
+        type: PersistedAliasMapper
+        tableName: tx_nst3dev_domain_model_productarea
+        routeFieldName: slug

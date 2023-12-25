@@ -19,27 +19,6 @@ plugin.tx_nst3dev_listing {
     mvc {
         #callDefaultActionIfActionCantBeResolved = 1
     }
-    settings{
-        # Add any dataProcessor classes that will be called just before the action will be rendered
-            dataProcessors {
-                # Enable image upload
-                40 {
-                class = NITSAN\NsT3dev\DataProcessor\ImageManipulation
-                config {
-                        propertyNamesForUpload = image
-                        sysFileRelation {
-                        tablenames = tx_nst3dev_domain_model_productarea
-                        fieldname = image
-                        table_local = sys_file
-                    }
-                }
-                events {
-                    ProductArea = create
-                    # ProductArea = update
-                }
-            }
-        }
-    }
 }
 plugin.tx_form {
     settings {
