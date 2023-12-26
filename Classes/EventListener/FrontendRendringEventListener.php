@@ -4,15 +4,15 @@ namespace NITSAN\NsT3dev\EventListener;
 
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use NITSAN\NsT3dev\Event\FrentendRendringEvent;
+use NITSAN\NsT3dev\Event\FrontendRendringEvent;
 
-class FrentendRendringEventListener
+class FrontendRendringEventListener
 {
    
-    public function __invoke(FrentendRendringEvent $event): void
+    public function __invoke(FrontendRendringEvent $event): void
     {   
         $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
-        $pageRenderer->addCssFile("EXT:ns_t3dev/Resources/Public/Css/myCustom.css");
+        $pageRenderer->addCssFile("EXT:ns_t3dev/Resources/Public/Css/global.css");
         
     }
 }
