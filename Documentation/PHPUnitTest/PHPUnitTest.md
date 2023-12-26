@@ -69,6 +69,6 @@ settings:
 
 ---------------------------------------------------------
 ### Image references for configuration:
-![Configuration for functional test](../Resources/Public/Images/FunctionalTest.png "Functional Test")
+![Configuration for functional test](../Images/FunctionalTest.png "Functional Test")
 
-![Configuration for unit test](../Resources/Public/Images/UnitTest.png "Unit Test")
+![Configuration for unit test](../Images/UnitTest.png "Unit Test")
