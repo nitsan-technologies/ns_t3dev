@@ -6,7 +6,7 @@ var loader = document.querySelector(".product-loader");
 const paginate = function(event) {
     let url = this.getAttribute("href");
     if(paginateLinks.length != 1) {
-        products.innerHTML = '';  
+        products.innerHTML = '';
     }
     // Show loader
     loader.classList.remove('d-none');
@@ -55,11 +55,32 @@ if(paginateLinks.length > 0) {
 
 
 
-// var paginate = new Paginate({
-//     paginationType: 'pager/loadmore',
-//     containerWraper: '#paginationContainer',
-//     paginateClass: '.page-link',
-//     targetContainer: '#paginationContainer'
+const paginate = function(event) {
+  let url = this.getAttribute("href");
+  event.preventDefault();
+  fetch(url, {
+    method: 'GET',
+  }).then((resp) => {
+    return resp.text();
+  }).then((html) => {
 
-// });
-// paginate.initLink();
+    let parser = new DOMParser();
+    let doc = parser.parseFromString(html, "text/html");
+
+    // Get pagiantion section
+    let pagination = doc.querySelector('.pagination-load-wrap').innerHTML;
+    // Replace new HTML
+    paginationClass.innerHTML = pagination;
+
+    // Assign click event
+    let pageBtns = paginationClass.querySelectorAll('.paginate');
+    if(pageBtns.length > 0) {
+      for (let j = 0; j < pageBtns.length; j++) {
+        pageBtns[j].addEventListener('click', paginate, false);
+
+      }
+    }
+  }).catch((error) => {
+  });
+
+};

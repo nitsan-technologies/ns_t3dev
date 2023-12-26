@@ -32,7 +32,7 @@ class ProductArea extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $name = null;
 
-   
+
     /**
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference>
      * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
