@@ -76,8 +76,6 @@ class ProductAreaController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCont
      */
     public function createAction(\NITSAN\NsT3dev\Domain\Model\ProductArea $newProductArea)
     {
-        \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($_REQUEST, __FILE__.'Line no: '.__LINE__); die;
-
         $this->addFlashMessage('The object was created. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/p/friendsoftypo3/extension-builder/master/en-us/User/Index.html', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
         $this->productAreaRepository->add($newProductArea);
         $this->redirect('list');
