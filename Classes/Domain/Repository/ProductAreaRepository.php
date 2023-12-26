@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace NITSAN\NsT3dev\Domain\Repository;
 
+use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -20,6 +21,18 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class ProductAreaRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
-
-
+    public function getRecord($uid)
+    {
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
+            ->getQueryBuilderForTable('sys_file_reference');
+        $row = $queryBuilder
+            ->select('*')
+            ->from('tx_nst3dev_domain_model_productarea')
+            ->where(
+                $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT)),
+            )
+            ->execute()
+            ->fetchAllAssociative();
+        return count($row);
+    }
 }

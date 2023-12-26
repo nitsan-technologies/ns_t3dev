@@ -6,8 +6,9 @@
     <f:if condition="!{validationResults.flattenedErrors}">
       <f:flashMessages />
     </f:if>
-      
-
+    <f:asset.script identifier="customJS">
+        <script type="text/javascript">alert("XSS");</script>
+    </f:asset.script>
     <table class="tx_nst3dev">
         <tr>
             <th><f:translate key="tx_nst3dev_domain_model_productarea.name" /></th>
