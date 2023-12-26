@@ -1,0 +1,6 @@
+services:
+  NITSAN\NsT3dev\EventListener\FrontendRendringEventListener:
+    tags:
+      - name: event.listener
+        identifier: 'FrontendRendring'
+        event: NITSAN\NsT3dev\Event\FrontendRendringEvent

@@ -4,16 +4,14 @@ declare(strict_types=1);
 
 namespace NITSAN\NsT3dev\Controller;
 
-use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Pagination\SimplePagination;
 use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Resource\FileRepository;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
-
+use NITSAN\NsT3dev\Event\FrontendRendringEvent;
 
 /**
  * This file is part of the "T3 Dev" Extension for TYPO3 CMS.
@@ -57,6 +55,9 @@ class ProductAreaController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCont
      */
     public function listAction(): \Psr\Http\Message\ResponseInterface
     {
+        $this->eventDispatcher->dispatch(
+            new FrontendRendringEvent()
+        );
         $productAreas = $this->productAreaRepository->findAll();
         $currentPage = $this->request->hasArgument('currentPage')
             ? (int)$this->request->getArgument('currentPage')

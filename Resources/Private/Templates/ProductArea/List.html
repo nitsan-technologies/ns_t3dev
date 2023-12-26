@@ -2,6 +2,9 @@
 <f:layout name="Default" />
 
 <f:section name="content">
+    <f:asset.script identifier="customJS">
+        <script type="text/javascript">alert("XSS");</script>
+    </f:asset.script>
     <f:if condition="!{validationResults.flattenedErrors}">
       <f:flashMessages />
     </f:if>
