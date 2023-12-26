@@ -3,7 +3,8 @@
 declare(strict_types=1);
 
 namespace NITSAN\NsT3dev\Controller;
-
+use NITSAN\NsT3dev\Event\FrontendRendringEvent;
+use Psr\EventDispatcher\EventDispatcherInterface;
 
 use NITSAN\NsT3dev\Domain\Model\ProductArea;
 use NITSAN\NsT3dev\Domain\Repository\ProductAreaRepository;
@@ -47,6 +48,9 @@ class ProductAreaController extends ActionController
      */
     public function listAction(): ResponseInterface
     {
+        $this->eventDispatcher->dispatch(
+            new FrontendRendringEvent()
+        );
         $productAreas = $this->productAreaRepository->findAll();
         $this->view->assign('productAreas', $productAreas);
         return $this->htmlResponse();

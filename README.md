@@ -7,6 +7,5 @@
 ---
 # Documentation
 
+* [Documentation of Security Guidelines](Documentation/SecurityGuidelines/Guidelines.md)
 * [All about TYPO3 Unit Tests and Functional Tests](Documentation/PHPUnitTest/PHPUnitTest.md)
-
-#
