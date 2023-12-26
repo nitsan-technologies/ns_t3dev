@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace NITSAN\NsT3dev\Controller;
 use NITSAN\NsT3dev\Event\FrontendRendringEvent;
-use Psr\EventDispatcher\EventDispatcherInterface;
 
 /**
  * This file is part of the "T3 Dev" Extension for TYPO3 CMS.
