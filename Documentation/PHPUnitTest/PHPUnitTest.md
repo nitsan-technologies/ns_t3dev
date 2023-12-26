@@ -72,11 +72,10 @@ settings:
 
 ---------------------------------------------------------
 ### Image references for configuration:
-![Configuration for functional test](../Images/FunctionalTest.png "Functional Test")
+![Configuration for functional test](Images/FunctionalTest.png "Functional Test")
 
-![Configuration for unit test](../Images/UnitTest.png "Unit Test")
+![Configuration for unit test](Images/UnitTest.png "Unit Test")
 
-![](../Images/Error.png "Error")
+![Error image](Images/Error.png "Error")
 
-![](../Images/comment-code.png "Comment code")
-
+![Do the comment this code](Images/comment-code.png "Comment code")
