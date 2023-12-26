@@ -11,6 +11,9 @@ Keep tests as simple as possible! Tests should be easy to write, understand, rea
 
 > Note: Use your extension's local path instead of `/home/nitsan/Workspace/ns_t3dev` in this location.
 
+> Note: If you see the error message `ActionController::$internalExtensionService must not be accessed before initialization`, please comment out the flash message in the controller. Refer to the screenshot below for guidance.
+.
+
 ---
 Running unit and functional tests without PHPStorm
 =============================================
@@ -72,3 +75,8 @@ settings:
 ![Configuration for functional test](../Images/FunctionalTest.png "Functional Test")
 
 ![Configuration for unit test](../Images/UnitTest.png "Unit Test")
+
+![](../Images/Error.png "Error")
+
+![](../Images/comment-code.png "Comment code")
+

@@ -81,6 +81,7 @@ class ProductAreaController extends ActionController
      */
     public function createAction(ProductArea $newProductArea)
     {
+        $this->addFlashMessage('The object was created. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/p/friendsoftypo3/extension-builder/master/en-us/User/Index.html', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
         $this->productAreaRepository->add($newProductArea);
         $this->redirect('list');
     }
@@ -105,6 +106,7 @@ class ProductAreaController extends ActionController
      */
     public function updateAction(ProductArea $productArea)
     {
+        $this->addFlashMessage('The object was updated. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/p/friendsoftypo3/extension-builder/master/en-us/User/Index.html', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
         $this->productAreaRepository->update($productArea);
         $this->redirect('list');
     }
@@ -116,6 +118,7 @@ class ProductAreaController extends ActionController
      */
     public function deleteAction(ProductArea $productArea)
     {
+        $this->addFlashMessage('The object was deleted. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/p/friendsoftypo3/extension-builder/master/en-us/User/Index.html', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
         $this->productAreaRepository->remove($productArea);
         $this->redirect('list');
     }

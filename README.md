@@ -7,6 +7,6 @@
 ---
 # Documentation
 
-* [All about TYPO3 Unit Tests and Functional Tests:](Documentation/PHPUnitTest/PHPUnitTest.md)
+* [All about TYPO3 Unit Tests and Functional Tests](Documentation/PHPUnitTest/PHPUnitTest.md)
 
 #
