@@ -6,7 +6,6 @@ use Psr\EventDispatcher\StoppableEventInterface;
 
 class FrontendRendringEvent implements StoppableEventInterface
 {
-    
     public function isPropagationStopped(): bool
     {
         return false;
