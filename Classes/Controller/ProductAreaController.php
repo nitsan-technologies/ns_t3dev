@@ -3,7 +3,8 @@
 declare(strict_types=1);
 
 namespace NITSAN\NsT3dev\Controller;
-
+use NITSAN\NsT3dev\Event\FrontendRendringEvent;
+use Psr\EventDispatcher\EventDispatcherInterface;
 
 /**
  * This file is part of the "T3 Dev" Extension for TYPO3 CMS.
@@ -42,6 +43,9 @@ class ProductAreaController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCont
      */
     public function listAction(): \Psr\Http\Message\ResponseInterface
     {
+        $this->eventDispatcher->dispatch(
+            new FrontendRendringEvent()
+        );
         $productAreas = $this->productAreaRepository->findAll();
         $this->view->assign('productAreas', $productAreas);
         return $this->htmlResponse();
