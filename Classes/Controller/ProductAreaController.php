@@ -257,21 +257,6 @@ class ProductAreaController extends ActionController implements LoggerAwareInter
 
         }
 
-        $connection->insert(
-            'sys_log',
-            [
-                'userid' => $userId,
-                'type' => SystemLogType::ERROR,
-                'channel' => SystemLogType::toChannel(SystemLogType::ERROR),
-                'action' => SystemLogGenericAction::UNDEFINED,
-                'error' => SystemLogErrorClassification::SYSTEM_ERROR,
-                'level' => SystemLogType::toLevel(SystemLogType::ERROR),
-                'details_nr' => 0,
-                'details' => str_replace('%', '%%', $logMessage),
-                'IP' => (string)GeneralUtility::getIndpEnv('REMOTE_ADDR'),
-                'tstamp' => $GLOBALS['EXEC_TIME'],
-                'workspace' => $workspace,
-            ]
-        );
+        $this->productAreaRepository->generateErrorLog($userId,$logMessage,$workspace);
     }
 }
