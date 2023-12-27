@@ -1,0 +1,37 @@
+.form-group-custom {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 2px;
+}
+
+.form-group-custom .form-control {
+    width: 100%;
+    outline: none;
+    padding: 10px;
+    border: none;
+    background: #d1d1d130;
+    font-size: 16px;
+}
+
+.has-success .form-control {
+    border: 1px solid #168b3f;
+}
+
+.has-danger .form-control {
+    border: 1px solid #dc1d34;
+}
+
+.form-group-custom .help-block {
+    color: #dc1d34;
+}
+
+.inline-label label{
+    display: inline;
+}
+
+.pristine-error {
+    display: table;
+}

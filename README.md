@@ -8,3 +8,4 @@
 
 * [Documentation of Security Guidelines](Documentation/SecurityGuidelines/Guidelines.md)
 * [Documentation of Event And Event Dispatcher](Documentation/Event/EventandEventDispatcher.md)
+* [Documentation of Frontend CRUD Operation](Documentation/FrontendCRUDOprations/CRUD.md)

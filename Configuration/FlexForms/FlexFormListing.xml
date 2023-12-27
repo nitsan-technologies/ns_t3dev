@@ -1,0 +1,63 @@
+<T3DataStructure>
+	<sheets>
+		<sDEF>
+			<ROOT>
+				<TCEforms>
+					<sheetTitle>LLL:EXT:ns_t3dev/Resources/Private/Language/locallang_flex.xlf:listing.sheet_title</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+					<settings.itemsPerPage>
+						<TCEforms>
+							<label>LLL:EXT:ns_t3dev/Resources/Private/Language/locallang_flex.xlf:listing.itemsPerPage</label>
+							<config>
+								<type>input</type>																
+								<size>3</size>	
+								<eval>int,required</eval>
+								<default>4</default>			
+								<range>
+									<upper>99</upper>
+									<lower>1</lower>
+								</range>																				
+							</config>
+						</TCEforms>
+					</settings.itemsPerPage>
+					<settings.paginationType>
+						<TCEforms>
+					    	<label>LLL:EXT:ns_t3dev/Resources/Private/Language/locallang_flex.xlf:listing.paginationType</label>
+					    	<config>
+						        <type>select</type>
+						        <renderType>selectSingle</renderType>
+						        <items>
+						            <numIndex index="0">
+						                <numIndex index="0">
+						                    LLL:EXT:ns_t3dev/Resources/Private/Language/locallang_flex.xlf:listing.paginationType_loadMore
+						                </numIndex>
+						                <numIndex index="1">1</numIndex>
+						            </numIndex>
+						            <numIndex index="1">
+						                <numIndex index="0">
+						                    LLL:EXT:ns_t3dev/Resources/Private/Language/locallang_flex.xlf:listing.paginationType_numbered
+						                </numIndex>
+						                <numIndex index="1">2</numIndex>
+						            </numIndex>
+						        </items>
+					    	</config>
+						</TCEforms>
+					</settings.paginationType>
+					<settings.detailPageId>
+						<TCEforms>
+							<label>LLL:EXT:ns_t3dev/Resources/Private/Language/locallang_flex.xlf:listing.detailPageId</label>
+							<config>
+								<type>group</type>
+								<internal_type>db</internal_type>
+								<allowed>pages</allowed>
+								<maxitems>1</maxitems>
+							</config>
+						</TCEforms>
+					</settings.detailPageId>
+				</el>
+			</ROOT>
+		</sDEF>
+	</sheets>
+</T3DataStructure>

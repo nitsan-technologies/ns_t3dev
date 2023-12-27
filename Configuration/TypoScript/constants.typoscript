@@ -11,6 +11,13 @@ plugin.tx_nst3dev_listing {
         # cat=plugin.tx_nst3dev_listing//a; type=string; label=Default storage PID
         storagePid =
     }
+    settings{
+        paginationLib = EXT:ns_t3dev/Resources/Public/dist/pagination.js
+        validationLib = EXT:ns_t3dev/Resources/Public/dist/pristine.js
+        validationJs= EXT:ns_t3dev/Resources/Public/Javascript/Validation.js
+        listingJs =  EXT:ns_t3dev/Resources/Public/Javascript/Listing.js
+        fromCss =  EXT:ns_t3dev/Resources/Public/css/form.css
+    }
 }
 plugin.tx_nst3dev_show {
     view {
