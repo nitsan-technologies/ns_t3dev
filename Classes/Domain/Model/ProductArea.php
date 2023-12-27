@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace NITSAN\NsT3dev\Domain\Model;
 
 use TYPO3\CMS\Extbase\Annotation\Validate;
-use NITSAN\NsT3dev\Domain\Validator\DescriptionValidator;
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 
@@ -21,7 +21,7 @@ use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 /**
  * ProductArea
  */
-class ProductArea extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+class ProductArea extends AbstractEntity
 {
 
     /**
@@ -32,9 +32,8 @@ class ProductArea extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $name = '';
 
-
     /**
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference>
+     * @var ObjectStorage<FileReference>
      * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
      */
     protected $image = null;
@@ -45,21 +44,21 @@ class ProductArea extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var string
      * @Validate("NITSAN\NsT3dev\Domain\Validator\DescriptionValidator")
      */
-    protected $description = '';
+    protected string $description = '';
 
     /**
      * slug
      *
      * @var string
      */
-    protected $slug = '';
+    protected string $slug = '';
 
     /**
      * Returns the name
      *
-     * @return string
+     * @return string|null
      */
-    public function getName() : string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -70,7 +69,7 @@ class ProductArea extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param string $name
      * @return void
      */
-    public function setName(string $name) : void
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
@@ -80,7 +79,7 @@ class ProductArea extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      *
      * @return string
      */
-    public function getDescription() : string
+    public function getDescription(): string
     {
         return $this->description;
     }
@@ -91,7 +90,7 @@ class ProductArea extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param string $description
      * @return void
      */
-    public function setDescription(string $description) : void
+    public function setDescription(string $description): void
     {
         $this->description = $description;
     }
@@ -101,7 +100,7 @@ class ProductArea extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      *
      * @return string
      */
-    public function getSlug() : string
+    public function getSlug(): string
     {
         return $this->slug;
     }
@@ -112,7 +111,7 @@ class ProductArea extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param string $slug
      * @return void
      */
-    public function setSlug(string $slug) : void
+    public function setSlug(string $slug): void
     {
         $this->slug = $slug;
     }
@@ -134,17 +133,17 @@ class ProductArea extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         return $this->image;
     }
 
-    public function setImage(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $image): void
+    public function setImage(ObjectStorage $image): void
     {
         $this->image = $image;
     }
 
-    public function addImage(\TYPO3\CMS\Extbase\Domain\Model\FileReference $img): void
+    public function addImage(FileReference $img): void
     {
         $this->image->attach($img);
     }
 
-    public function removeImage(\TYPO3\CMS\Extbase\Domain\Model\FileReference $img): void
+    public function removeImage(FileReference $img): void
     {
         $this->image->detach($img);
     }

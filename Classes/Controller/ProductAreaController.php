@@ -17,6 +17,9 @@ use NITSAN\NsT3dev\Domain\Repository\ProductAreaRepository;
 use NITSAN\NsT3dev\Domain\Model\ProductArea;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
 
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+
+
 /**
  * This file is part of the "T3 Dev" Extension for TYPO3 CMS.
  *
@@ -29,33 +32,29 @@ use TYPO3\CMS\Core\Messaging\AbstractMessage;
 /**
  * ProductAreaController
  */
-class ProductAreaController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
-{
 
+class ProductAreaController extends ActionController
+{
     /**
      * productAreaRepository
      *
      * @var ProductAreaRepository
      */
-    protected $productAreaRepository = null;
+    protected $productAreaRepository;
 
-    /**
-     * @param ProductAreaRepository $productAreaRepository
-     */
-    public function injectProductAreaRepository(ProductAreaRepository $productAreaRepository)
+
+    public function __construct(
+        ProductAreaRepository $productAreaRepository
+    )
     {
         $this->productAreaRepository = $productAreaRepository;
-    }
-
-    public function __construct() {
         $this->persistenceManager = GeneralUtility::makeInstance(PersistenceManager::class);
     }
-
 
     /**
      * action list
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return ResponseInterface
      */
     public function listAction(): ResponseInterface
     {
@@ -84,8 +83,8 @@ class ProductAreaController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCont
     /**
      * action show
      *
-     * @param \NITSAN\NsT3dev\Domain\Model\ProductArea $productArea
-     * @return \Psr\Http\Message\ResponseInterface
+     * @param ProductArea $productArea
+     * @return ResponseInterface
      */
     public function showAction(ProductArea $productArea): ResponseInterface
     {
@@ -96,7 +95,7 @@ class ProductAreaController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCont
     /**
      * action new
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return ResponseInterface
      */
     public function newAction(): ResponseInterface
     {
@@ -106,7 +105,7 @@ class ProductAreaController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCont
     /**
      * action create
      *
-     * @param \NITSAN\NsT3dev\Domain\Model\ProductArea $newProductArea
+     * @param ProductArea $newProductArea
      */
     public function createAction(ProductArea $newProductArea)
     {
@@ -140,9 +139,9 @@ class ProductAreaController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCont
     /**
      * action edit
      *
-     * @param \NITSAN\NsT3dev\Domain\Model\ProductArea $productArea
+     * @param ProductArea $productArea
      * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("productArea")
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return ResponseInterface
      */
     public function editAction(ProductArea $productArea): ResponseInterface
     {
@@ -153,7 +152,7 @@ class ProductAreaController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCont
     /**
      * action update
      *
-     * @param \NITSAN\NsT3dev\Domain\Model\ProductArea $productArea
+     * @param ProductArea $productArea
      */
     public function updateAction(ProductArea $productArea) : void
     {
@@ -184,7 +183,7 @@ class ProductAreaController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCont
     /**
      * action delete
      *
-     * @param \NITSAN\NsT3dev\Domain\Model\ProductArea $productArea
+     * @param ProductArea $productArea
      */
     public function deleteAction(ProductArea $productArea) : void
     {

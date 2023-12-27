@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace NITSAN\NsT3dev\Tests\Unit\Domain\Model;
 
+use NITSAN\NsT3dev\Domain\Model\ProductArea;
 use PHPUnit\Framework\MockObject\MockObject;
+use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\TestingFramework\Core\AccessibleObjectInterface;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
@@ -16,18 +18,14 @@ use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 class ProductAreaTest extends UnitTestCase
 {
     /**
-     * @var \NITSAN\NsT3dev\Domain\Model\ProductArea|MockObject|AccessibleObjectInterface
+     * @var ProductArea|MockObject|AccessibleObjectInterface
      */
     protected $subject;
 
     protected function setUp(): void
     {
         parent::setUp();
-
-        $this->subject = $this->getAccessibleMock(
-            \NITSAN\NsT3dev\Domain\Model\ProductArea::class,
-            ['dummy']
-        );
+        $this->subject = new ProductArea();
     }
 
     protected function tearDown(): void
@@ -53,7 +51,7 @@ class ProductAreaTest extends UnitTestCase
     {
         $this->subject->setName('Conceived at T3CON10');
 
-        self::assertEquals('Conceived at T3CON10', $this->subject->_get('name'));
+        self::assertEquals('Conceived at T3CON10', $this->subject->getName());
     }
 
     /**
@@ -72,10 +70,10 @@ class ProductAreaTest extends UnitTestCase
      */
     public function setImageForFileReferenceSetsImage(): void
     {
-        $fileReferenceFixture = new \TYPO3\CMS\Extbase\Domain\Model\FileReference();
+        $fileReferenceFixture = new FileReference();
         $this->subject->setImage($fileReferenceFixture);
 
-        self::assertEquals($fileReferenceFixture, $this->subject->_get('image'));
+        self::assertEquals($fileReferenceFixture, $this->subject->getImage());
     }
 
     /**
@@ -96,7 +94,7 @@ class ProductAreaTest extends UnitTestCase
     {
         $this->subject->setDescription('Conceived at T3CON10');
 
-        self::assertEquals('Conceived at T3CON10', $this->subject->_get('description'));
+        self::assertEquals('Conceived at T3CON10', $this->subject->getDescription());
     }
 
     /**
@@ -117,6 +115,6 @@ class ProductAreaTest extends UnitTestCase
     {
         $this->subject->setSlug('Conceived at T3CON10');
 
-        self::assertEquals('Conceived at T3CON10', $this->subject->_get('slug'));
+        self::assertEquals('Conceived at T3CON10', $this->subject->getSlug());
     }
 }

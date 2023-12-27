@@ -13,20 +13,5 @@ use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
  */
 class BasicTest extends FunctionalTestCase
 {
-    /**
-     * @var array
-     */
-    protected $testExtensionsToLoad = [
-        'typo3conf/ext/ns_t3dev',
-    ];
-
-    /**
-     * Just a dummy to show that at least one test is actually executed
-     *
-     * @test
-     */
-    public function dummy(): void
-    {
-        $this->assertTrue(true);
-    }
+    protected array $testExtensionsToLoad = ['nitsan/ns-t3dev'];
 }
