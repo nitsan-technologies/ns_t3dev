@@ -30,7 +30,7 @@ class ProductArea extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var string
      * @Validate("NotEmpty")
      */
-    protected $name = null;
+    protected $name = '';
 
 
     /**
@@ -45,21 +45,21 @@ class ProductArea extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var string
      * @Validate("NITSAN\NsT3dev\Domain\Validator\DescriptionValidator")
      */
-    protected $description = null;
+    protected $description = '';
 
     /**
      * slug
      *
      * @var string
      */
-    protected $slug = null;
+    protected $slug = '';
 
     /**
      * Returns the name
      *
      * @return string
      */
-    public function getName()
+    public function getName() : string
     {
         return $this->name;
     }
@@ -70,7 +70,7 @@ class ProductArea extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param string $name
      * @return void
      */
-    public function setName(string $name)
+    public function setName(string $name) : void
     {
         $this->name = $name;
     }
@@ -80,7 +80,7 @@ class ProductArea extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      *
      * @return string
      */
-    public function getDescription()
+    public function getDescription() : string
     {
         return $this->description;
     }
@@ -91,7 +91,7 @@ class ProductArea extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param string $description
      * @return void
      */
-    public function setDescription(string $description)
+    public function setDescription(string $description) : void
     {
         $this->description = $description;
     }
@@ -101,7 +101,7 @@ class ProductArea extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      *
      * @return string
      */
-    public function getSlug()
+    public function getSlug() : string
     {
         return $this->slug;
     }
@@ -112,7 +112,7 @@ class ProductArea extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param string $slug
      * @return void
      */
-    public function setSlug(string $slug)
+    public function setSlug(string $slug) : void
     {
         $this->slug = $slug;
     }

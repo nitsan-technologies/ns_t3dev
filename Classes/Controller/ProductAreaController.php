@@ -12,6 +12,10 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use NITSAN\NsT3dev\Event\FrontendRendringEvent;
+use Psr\Http\Message\ResponseInterface;
+use NITSAN\NsT3dev\Domain\Repository\ProductAreaRepository;
+use NITSAN\NsT3dev\Domain\Model\ProductArea;
+use TYPO3\CMS\Core\Messaging\AbstractMessage;
 
 /**
  * This file is part of the "T3 Dev" Extension for TYPO3 CMS.
@@ -31,14 +35,14 @@ class ProductAreaController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCont
     /**
      * productAreaRepository
      *
-     * @var \NITSAN\NsT3dev\Domain\Repository\ProductAreaRepository
+     * @var ProductAreaRepository
      */
     protected $productAreaRepository = null;
 
     /**
-     * @param \NITSAN\NsT3dev\Domain\Repository\ProductAreaRepository $productAreaRepository
+     * @param ProductAreaRepository $productAreaRepository
      */
-    public function injectProductAreaRepository(\NITSAN\NsT3dev\Domain\Repository\ProductAreaRepository $productAreaRepository)
+    public function injectProductAreaRepository(ProductAreaRepository $productAreaRepository)
     {
         $this->productAreaRepository = $productAreaRepository;
     }
@@ -53,7 +57,7 @@ class ProductAreaController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCont
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function listAction(): \Psr\Http\Message\ResponseInterface
+    public function listAction(): ResponseInterface
     {
         $this->eventDispatcher->dispatch(
             new FrontendRendringEvent()
@@ -83,7 +87,7 @@ class ProductAreaController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCont
      * @param \NITSAN\NsT3dev\Domain\Model\ProductArea $productArea
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function showAction(\NITSAN\NsT3dev\Domain\Model\ProductArea $productArea): \Psr\Http\Message\ResponseInterface
+    public function showAction(ProductArea $productArea): ResponseInterface
     {
         $this->view->assign('productArea', $productArea);
         return $this->htmlResponse();
@@ -94,7 +98,7 @@ class ProductAreaController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCont
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function newAction(): \Psr\Http\Message\ResponseInterface
+    public function newAction(): ResponseInterface
     {
         return $this->htmlResponse();
     }
@@ -104,10 +108,10 @@ class ProductAreaController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCont
      *
      * @param \NITSAN\NsT3dev\Domain\Model\ProductArea $newProductArea
      */
-    public function createAction(\NITSAN\NsT3dev\Domain\Model\ProductArea $newProductArea)
+    public function createAction(ProductArea $newProductArea)
     {
 
-        $this->addFlashMessage('The object was created. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/p/friendsoftypo3/extension-builder/master/en-us/User/Index.html', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+        $this->addFlashMessage('The object was created. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/p/friendsoftypo3/extension-builder/master/en-us/User/Index.html', '', AbstractMessage::WARNING);
         $this->productAreaRepository->add($newProductArea);
         $this->persistenceManager->persistAll();
         if($_FILES['tx_nst3dev_listing']){
@@ -140,7 +144,7 @@ class ProductAreaController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCont
      * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("productArea")
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function editAction(\NITSAN\NsT3dev\Domain\Model\ProductArea $productArea): \Psr\Http\Message\ResponseInterface
+    public function editAction(ProductArea $productArea): ResponseInterface
     {
         $this->view->assign('productArea', $productArea);
         return $this->htmlResponse();
@@ -151,7 +155,7 @@ class ProductAreaController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCont
      *
      * @param \NITSAN\NsT3dev\Domain\Model\ProductArea $productArea
      */
-    public function updateAction(\NITSAN\NsT3dev\Domain\Model\ProductArea $productArea)
+    public function updateAction(ProductArea $productArea) : void
     {
         if($_FILES['tx_nst3dev_listing']['tmp_name']['image']){
             $newFile = $this->getUploadedFileData($_FILES['tx_nst3dev_listing']['tmp_name']['image'], $_FILES['tx_nst3dev_listing']['name']['image']);
@@ -173,7 +177,7 @@ class ProductAreaController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCont
             }
         }
         $this->productAreaRepository->update($productArea);
-        $this->addFlashMessage('The object was updated. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/p/friendsoftypo3/extension-builder/master/en-us/User/Index.html', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+        $this->addFlashMessage('The object was updated. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/p/friendsoftypo3/extension-builder/master/en-us/User/Index.html', '', AbstractMessage::WARNING);
         $this->redirect('list');
     }
 
@@ -182,9 +186,9 @@ class ProductAreaController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCont
      *
      * @param \NITSAN\NsT3dev\Domain\Model\ProductArea $productArea
      */
-    public function deleteAction(\NITSAN\NsT3dev\Domain\Model\ProductArea $productArea)
+    public function deleteAction(ProductArea $productArea) : void
     {
-        $this->addFlashMessage('The object was deleted. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/p/friendsoftypo3/extension-builder/master/en-us/User/Index.html', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+        $this->addFlashMessage('The object was deleted. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/p/friendsoftypo3/extension-builder/master/en-us/User/Index.html', '', AbstractMessage::WARNING);
         $this->productAreaRepository->remove($productArea);
         $this->redirect('list');
     }
@@ -194,7 +198,7 @@ class ProductAreaController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCont
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function validationAction(): \Psr\Http\Message\ResponseInterface
+    public function validationAction(): ResponseInterface
     {
         return $this->htmlResponse();
     }
