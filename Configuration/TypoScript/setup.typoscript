@@ -58,6 +58,51 @@ plugin.tx_nst3dev_show {
     }
 }
 
+
+page.includeJSFooter {
+    paginationLib = {$plugin.tx_nst3dev_listing.settings.paginationLib}
+    validationLib = {$plugin.tx_nst3dev_listing.settings.validationLib}
+    validationJs = {$plugin.tx_nst3dev_listing.settings.validationJs}
+    listingJs = {$plugin.tx_nst3dev_listing.settings.listingJs}
+}
+
+page.includeCSS {
+    fromCss = {$plugin.tx_nst3dev_listing.settings.fromCss}
+}
+
+listAction = PAGE
+listAction {
+    typeNum = 941851233551
+    config {
+        disableAllHeaderCode = 1
+        additionalHeaders = Content-type:application/json
+        xhtml_cleaning = 0
+        admPanel = 0
+    }
+
+    10 = USER
+    10 < styles.content.get
+    10 {
+        userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+        extensionName = NsT3dev
+        pluginName = Listing
+        vendorName = NITSAN
+        controller = ProductArea
+        switchableControllerActions {
+            ProductArea {
+                1 = list
+            }
+        }
+
+        stdWrap.trim = 1
+        select {
+            where = list_type = "nst3dev_listing"
+        }
+
+        renderObj < tt_content.list.20.nst3dev_listing
+    }
+}
+
 # these classes are only used in auto-generated templates
 plugin.tx_nst3dev._CSS_DEFAULT_STYLE (
     textarea.f3-form-error {

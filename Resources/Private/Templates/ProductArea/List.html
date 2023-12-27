@@ -2,34 +2,59 @@
 <f:layout name="Default" />
 
 <f:section name="content">
-    <h1>Listing for ProductArea</h1>
-    <f:if condition="!{validationResults.flattenedErrors}">
-      <f:flashMessages />
-    </f:if>
     <f:asset.script identifier="customJS">
         <script type="text/javascript">alert("XSS");</script>
     </f:asset.script>
-    <table class="tx_nst3dev">
-        <tr>
-            <th><f:translate key="tx_nst3dev_domain_model_productarea.name" /></th>
-            <th><f:translate key="tx_nst3dev_domain_model_productarea.image" /></th>
-            <th><f:translate key="tx_nst3dev_domain_model_productarea.description" /></th>
-            <th><f:translate key="tx_nst3dev_domain_model_productarea.slug" /></th>
-            <th></th>
-            <th></th>
-        </tr>
-        <f:for each="{productAreas}" as="productArea">
-            <tr>
-                <td><f:link.action action="show" arguments="{productArea : productArea}">{productArea.name}</f:link.action></td>
-                <td><f:link.action action="show" arguments="{productArea : productArea}">{productArea.image.originalResource.name}</f:link.action></td>
-                <td><f:link.action action="show" arguments="{productArea : productArea}">{productArea.description}</f:link.action></td>
-                <td><f:link.action action="show" arguments="{productArea : productArea}">{productArea.slug}</f:link.action></td>
-                <td><f:link.action action="edit" arguments="{productArea : productArea}">Edit</f:link.action></td>
-                <td><f:link.action action="delete" arguments="{productArea : productArea}">Delete</f:link.action></td>
-            </tr>
-        </f:for>
-    </table>
-
-    <f:link.action action="new">New ProductArea</f:link.action>
+    <f:if condition="!{validationResults.flattenedErrors}">
+      <f:flashMessages />
+    </f:if>
+    <div class="container">
+        <f:link.action action="new"><f:translate key="new.record" /></f:link.action>
+        <h1><f:translate key="record.listing" /></h1>
+        <f:flashMessages />
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border product-loader mb-5 mt-5 d-none" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <div class="product-items">
+            <f:for each="{pagination.paginator.paginatedItems}" as="product" iteration="iterator">
+                <div class="card mb-3">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <f:if condition="{product.image}">
+                                <f:image image="{product.image.0}" class="img-fluid rounded-start" alt="image" />
+                            </f:if>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">{product.name}</h5>
+                                <p class="card-text">
+                                    <f:format.html>{product.description -> f:format.crop(maxCharacters: 100)}</f:format.html>
+                                </p>
+                                <f:if condition="{settings.detailPageId}">
+                                    <f:link.action action="show" pageUid="{settings.detailPageId}" arguments="{productArea:product}" pluginName="Show">
+                                        <f:translate key="record.details" />
+                                    </f:link.action>
+                                </f:if>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <f:link.action action="edit" pageUid="{settings.editPageId}" arguments="{productArea:product}">
+                                <f:translate key="record.edit" />
+                            </f:link.action>
+                            <f:link.action action="delete" pageUid="{settings.editPageId}" arguments="{productArea:product}"
+                                           onclick="return confirm('Are you sure to delete?')">
+                                <f:translate key="record.remove" />
+                            </f:link.action>
+                        </div>
+                    </div>
+                </div>
+            </f:for>
+        </div>
+        <f:render partial="ProductArea/Pagination" arguments="{pagination: pagination.pagination, paginator: pagination.paginator, actionName: 'list'}" />
+    </div>
 </f:section>
 </html>

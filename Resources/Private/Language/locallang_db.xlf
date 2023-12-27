@@ -22,13 +22,19 @@
 				<source>Listing</source>
 			</trans-unit>
 			<trans-unit id="tx_ns_t3dev_listing.description" resname="tx_ns_t3dev_listing.description">
-				<source></source>
+				<source>Listing along with pagination using Javascript</source>
 			</trans-unit>
 			<trans-unit id="tx_ns_t3dev_show.name" resname="tx_ns_t3dev_show.name">
 				<source>Show/Detail</source>
 			</trans-unit>
 			<trans-unit id="tx_ns_t3dev_show.description" resname="tx_ns_t3dev_show.description">
 				<source></source>
+			</trans-unit>
+			<trans-unit id="tx_ns_t3dev_validation.name" resname="tx_ns_t3dev_validation.name">
+				<source>Validation</source>
+			</trans-unit>
+			<trans-unit id="tx_ns_t3dev_validation.description" resname="tx_ns_t3dev_validation.description">
+				<source>Client side validation demo form</source>
 			</trans-unit>
 		</body>
 	</file>

@@ -6,6 +6,9 @@ namespace NITSAN\NsT3dev\Domain\Model;
 
 use TYPO3\CMS\Extbase\Annotation\Validate;
 use NITSAN\NsT3dev\Domain\Validator\DescriptionValidator;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+use TYPO3\CMS\Extbase\Domain\Model\FileReference;
+
 /**
  * This file is part of the "T3 Dev" Extension for TYPO3 CMS.
  *
@@ -27,13 +30,12 @@ class ProductArea extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var string
      * @Validate("NotEmpty")
      */
-    protected $name = null;
+    protected $name = '';
+
 
     /**
-     * image
-     *
-     * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference
-     * @TYPO3\CMS\Extbase\Annotation\ORM\Cascade("remove")
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference>
+     * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
      */
     protected $image = null;
 
@@ -43,21 +45,21 @@ class ProductArea extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var string
      * @Validate("NITSAN\NsT3dev\Domain\Validator\DescriptionValidator")
      */
-    protected $description = null;
+    protected $description = '';
 
     /**
      * slug
      *
      * @var string
      */
-    protected $slug = null;
+    protected $slug = '';
 
     /**
      * Returns the name
      *
      * @return string
      */
-    public function getName()
+    public function getName() : string
     {
         return $this->name;
     }
@@ -68,30 +70,9 @@ class ProductArea extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param string $name
      * @return void
      */
-    public function setName(string $name)
+    public function setName(string $name) : void
     {
         $this->name = $name;
-    }
-
-    /**
-     * Returns the image
-     *
-     * @return \TYPO3\CMS\Extbase\Domain\Model\FileReference
-     */
-    public function getImage()
-    {
-        return $this->image;
-    }
-
-    /**
-     * Sets the image
-     *
-     * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $image
-     * @return void
-     */
-    public function setImage(\TYPO3\CMS\Extbase\Domain\Model\FileReference $image)
-    {
-        $this->image = $image;
     }
 
     /**
@@ -99,7 +80,7 @@ class ProductArea extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      *
      * @return string
      */
-    public function getDescription()
+    public function getDescription() : string
     {
         return $this->description;
     }
@@ -110,7 +91,7 @@ class ProductArea extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param string $description
      * @return void
      */
-    public function setDescription(string $description)
+    public function setDescription(string $description) : void
     {
         $this->description = $description;
     }
@@ -120,7 +101,7 @@ class ProductArea extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      *
      * @return string
      */
-    public function getSlug()
+    public function getSlug() : string
     {
         return $this->slug;
     }
@@ -131,8 +112,40 @@ class ProductArea extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param string $slug
      * @return void
      */
-    public function setSlug(string $slug)
+    public function setSlug(string $slug) : void
     {
         $this->slug = $slug;
+    }
+
+     /**
+     * __construct
+     */
+    public function __construct()
+    {
+        // Do not remove the next line: It would break the functionality
+        $this->image = new ObjectStorage();
+    }
+
+    /**
+     * @psalm-return ObjectStorage<FileReference>
+     */
+    public function getImage(): ObjectStorage
+    {
+        return $this->image;
+    }
+
+    public function setImage(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $image): void
+    {
+        $this->image = $image;
+    }
+
+    public function addImage(\TYPO3\CMS\Extbase\Domain\Model\FileReference $img): void
+    {
+        $this->image->attach($img);
+    }
+
+    public function removeImage(\TYPO3\CMS\Extbase\Domain\Model\FileReference $img): void
+    {
+        $this->image->detach($img);
     }
 }
