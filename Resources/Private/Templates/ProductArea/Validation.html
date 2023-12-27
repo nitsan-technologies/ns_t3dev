@@ -1,0 +1,56 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+<f:section name="content">
+    <div class="container m-5">
+        <f:form id="demoForm" method="post">
+            <!-- Required validation -->
+            <div class="form-group-custom">
+                <label>Username (required)</label>
+                <f:form.textfield type="text" class="form-control" required="true" additionalAttributes="{data-pristine-required-message:'Please choose a username'}"/>
+            </div>
+
+            <!-- Patteren validation -->
+            <div class="form-group-custom">
+                <label>ZIP code</label>
+                <f:form.textfield type="text" class="form-control" additionalAttributes="{data-pristine-pattern-message:'Invalid ZIP code', data-pristine-pattern: '/^[0-9]{5}(?:-[0-9]{4})?$/'}"/>
+            </div>
+
+            <!-- Minimum value validation -->
+            <div class="form-group-custom">
+                <label>Your age (required, min. 14)</label>
+                <f:form.textfield type="number" class="form-control" required="true" additionalAttributes="{data-pristine-min-message:'You must be at least 14-years-old', min:14}"/>
+            </div>
+
+            <!-- Password validation -->
+            <div class="form-group-custom">
+                <label>Password (required)</label>
+                <f:form.password id="pwd"  class="form-control" additionalAttributes="{data-pristine-required-message:'Please choose a password', data-pristine-pattern:'/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/', data-pristine-pattern-message:'Minimum 8 characters, at least one uppercase letter, one lowercase letter and one number',required:'true'}"/>
+            </div>
+
+            <!-- Repeat password field -->
+            <div class="form-group-custom">
+                <label>Retype password</label>
+                <f:form.password id="pwd"  class="form-control" additionalAttributes="{data-pristine-equals:'#pwd',data-pristine-equals-message:'Passwords does not match'}"/>
+            </div>
+
+            <!-- Checkbox required validation -->
+            <div class="form-group-custom inline-label">
+                <f:form.checkbox name="myCheckBox" value="someValue" additionalAttributes="{data-pristine-required:'You must accept the terms and conditions'}"/>
+                <label for="ch1">I accept the terms  and conditions (required)</label><br/>
+            </div>
+
+            <!-- Custom validatior -->
+            <div class="form-group-custom">
+                <label>required, range 10-30</label>
+                <f:form.textfield type="text" class="form-control" additionalAttributes="{data-pristine-my-range:'10,30'}"/>
+            </div>
+
+            <div class="form-group-custom">
+                <input type="submit" value="Submit" class="btn btn-primary"/>
+            </div>
+
+        </f:form>
+        For more details <f:link.typolink parameter="https://pristine.js.org/" target="_blank">click here</f:link.typolink>
+    </div>
+</f:section>
+</html>

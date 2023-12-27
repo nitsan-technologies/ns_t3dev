@@ -1,3 +1,4 @@
+
 base: 'https://t3-dev.ddev.site/'
 languages:
   -
@@ -14,3 +15,5 @@ languages:
     flag: us
 rootPageId: 1
 websiteTitle: ''
+imports:
+  - { resource: "EXT:ns_t3dev/Configuration/Routes/Default.yaml" }

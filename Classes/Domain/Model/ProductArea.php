@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace NITSAN\NsT3dev\Domain\Model;
 
 use TYPO3\CMS\Extbase\Annotation\Validate;
-use NITSAN\NsT3dev\Domain\Validator\DescriptionValidator;
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 
 /**
@@ -20,7 +21,7 @@ use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 /**
  * ProductArea
  */
-class ProductArea extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+class ProductArea extends AbstractEntity
 {
 
     /**
@@ -29,13 +30,11 @@ class ProductArea extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var string
      * @Validate("NotEmpty")
      */
-    protected string $name = '';
+    protected $name = '';
 
     /**
-     * image
-     *
-     * @var FileReference
-     * @TYPO3\CMS\Extbase\Annotation\ORM\Cascade("remove")
+     * @var ObjectStorage<FileReference>
+     * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
      */
     protected $image = null;
 
@@ -73,27 +72,6 @@ class ProductArea extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setName(string $name): void
     {
         $this->name = $name;
-    }
-
-    /**
-     * Returns the image
-     *
-     * @return FileReference|null
-     */
-    public function getImage(): ?FileReference
-    {
-        return $this->image;
-    }
-
-    /**
-     * Sets the image
-     *
-     * @param FileReference $image
-     * @return void
-     */
-    public function setImage(FileReference $image): void
-    {
-        $this->image = $image;
     }
 
     /**
@@ -136,5 +114,37 @@ class ProductArea extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setSlug(string $slug): void
     {
         $this->slug = $slug;
+    }
+
+     /**
+     * __construct
+     */
+    public function __construct()
+    {
+        // Do not remove the next line: It would break the functionality
+        $this->image = new ObjectStorage();
+    }
+
+    /**
+     * @psalm-return ObjectStorage<FileReference>
+     */
+    public function getImage(): ObjectStorage
+    {
+        return $this->image;
+    }
+
+    public function setImage(ObjectStorage $image): void
+    {
+        $this->image = $image;
+    }
+
+    public function addImage(FileReference $img): void
+    {
+        $this->image->attach($img);
+    }
+
+    public function removeImage(FileReference $img): void
+    {
+        $this->image->detach($img);
     }
 }

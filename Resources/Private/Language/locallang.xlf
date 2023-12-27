@@ -18,6 +18,9 @@
 			<trans-unit id="tx_nst3dev_domain_model_productarea.slug" resname="tx_nst3dev_domain_model_productarea.slug">
 				<source>Slug</source>
 			</trans-unit>
+			<trans-unit id="widget.pagination.load_more" resname="widget.pagination.load_more">
+				<source>Load more</source>
+			</trans-unit>
 			<trans-unit id="formEditor.elements.TextMixin.editor.additionalClass.label" resname="formEditor.elements.TextMixin.editor.additionalClass.label">
 				<source>Additional Class</source>
 			</trans-unit>
@@ -51,7 +54,27 @@
 			<trans-unit id="formEditor.elements.TextMixin.editor.validators.CaptchaCompare.label" resname="formEditor.elements.TextMixin.editor.validators.CaptchaCompare.label">
 				<source>Captcha Compare</source>
 			</trans-unit>
-			
+			<trans-unit id="heading.detail">
+				<source>Single View for ProductArea</source>
+			</trans-unit>
+			<trans-unit id="new.record">
+				<source>New ProductArea</source>
+			</trans-unit>
+			<trans-unit id="record.listing">
+				<source>Listing for ProductArea</source>
+			</trans-unit>
+			<trans-unit id="edit.record">
+				<source>Edit ProductArea</source>
+			</trans-unit>
+			<trans-unit id="record.edit">
+				<source>Edit</source>
+			</trans-unit>
+			<trans-unit id="record.remove">
+				<source>Delete</source>
+			</trans-unit>
+			<trans-unit id="record.details">
+				<source>Details</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
