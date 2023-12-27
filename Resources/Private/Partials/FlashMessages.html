@@ -1,0 +1,26 @@
+<html
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    data-namespace-typo3-fluid="true">
+<f:flashMessages as="flashMessages">
+    <f:for each="{flashMessages}" as="flashMessage">
+        <f:switch expression="{flashMessage.severity}">
+            <f:case value="-1">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>{flashMessage.title}</strong> {flashMessage.message}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </f:case>
+            <f:defaultCase>
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>{flashMessage.title}</strong> {flashMessage.message}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </f:defaultCase>
+        </f:switch>
+    </f:for>
+</f:flashMessages>
+</html>

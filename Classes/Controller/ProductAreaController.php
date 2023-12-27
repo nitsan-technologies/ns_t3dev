@@ -4,21 +4,27 @@ declare(strict_types=1);
 
 namespace NITSAN\NsT3dev\Controller;
 
+use Error;
+use TYPO3\CMS\Core\DataHandling\Model\RecordStateFactory;
+use TYPO3\CMS\Core\DataHandling\SlugHelper;
+use TYPO3\CMS\Core\Exception;
 use TYPO3\CMS\Core\Pagination\SimplePagination;
 use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Resource\FileRepository;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
+use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
+use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use NITSAN\NsT3dev\Event\FrontendRendringEvent;
 use Psr\Http\Message\ResponseInterface;
 use NITSAN\NsT3dev\Domain\Repository\ProductAreaRepository;
 use NITSAN\NsT3dev\Domain\Model\ProductArea;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
-
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
 
 /**
  * This file is part of the "T3 Dev" Extension for TYPO3 CMS.
@@ -33,8 +39,10 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
  * ProductAreaController
  */
 
-class ProductAreaController extends ActionController
+class ProductAreaController extends ActionController implements LoggerAwareInterface
 {
+    use LoggerAwareTrait;
+
     /**
      * productAreaRepository
      *
@@ -109,28 +117,56 @@ class ProductAreaController extends ActionController
      */
     public function createAction(ProductArea $newProductArea)
     {
-
-        $this->addFlashMessage('The object was created. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/p/friendsoftypo3/extension-builder/master/en-us/User/Index.html', '', AbstractMessage::WARNING);
-        $this->productAreaRepository->add($newProductArea);
-        $this->persistenceManager->persistAll();
-        if($_FILES['tx_nst3dev_listing']){
-            $newFile = $this->getUploadedFileData($_FILES['tx_nst3dev_listing']['tmp_name']['image'], $_FILES['tx_nst3dev_listing']['name']['image']);
-            $fileData = $newFile->getProperties();
-            if ($fileData) {
-                $this->productAreaRepository->updateSysFileReferenceRecord(
-                    (int)$fileData['uid'],
-                    (int)$newProductArea->getUid(),
-                    (int)$newProductArea->getPid(),
+        try{
+            $this->productAreaRepository->add($newProductArea);
+            $this->persistenceManager->persistAll();
+            try {
+                //Create slug from the subject first...
+                $slug = $this->createSlug(
                     'tx_nst3dev_domain_model_productarea',
-                    'image'
+                    $newProductArea);
+                $newProductArea->setSlug($slug);
+                $this->productAreaRepository->update($newProductArea);
+            }catch (IllegalObjectTypeException  | UnknownObjectException | Error $exception){
+                $newProductArea->setHidden(true);
+                $this->productAreaRepository->update($newProductArea);
+                $this->logger->error(
+                    'An error was occurred in slug generation '.$exception->getMessage()
                 );
-                $fileRepository = GeneralUtility::makeInstance(FileRepository::class);
-                $fileObjects = $fileRepository->findByRelation(
-                    'tx_nst3dev_domain_model_productarea',
-                    'image',
-                    $newProductArea->getUid()
+                $this->addFlashMessage('An error was occurred in slug generation', '', AbstractMessage::ERROR);
+
+            }
+            if($_FILES['tx_nst3dev_listing']['tmp_name']['image']){
+                $newFile = $this->getUploadedFileData($_FILES['tx_nst3dev_listing']['tmp_name']['image'], $_FILES['tx_nst3dev_listing']['name']['image']);
+                $fileData = $newFile->getProperties();
+                if ($fileData) {
+                    $this->productAreaRepository->updateSysFileReferenceRecord(
+                        (int)$fileData['uid'],
+                        (int)$newProductArea->getUid(),
+                        (int)$newProductArea->getPid(),
+                        'tx_nst3dev_domain_model_productarea',
+                        'image'
+                    );
+                    $fileRepository = GeneralUtility::makeInstance(FileRepository::class);
+                    $fileObjects = $fileRepository->findByRelation(
+                        'tx_nst3dev_domain_model_productarea',
+                        'image',
+                        $newProductArea->getUid()
+                    );
+                }
+            }else{
+                $this->logger->warning(
+                    'Image is not added into this record '.$newProductArea->getUid()
                 );
             }
+            $this->addFlashMessage('The object was created', '', AbstractMessage::INFO);
+        }catch (Error $exception){
+
+            $this->logger->error(
+                'An error was occurred in insertion operation'.$exception->getMessage()
+            );
+            $this->addFlashMessage('Some error occurred', '', AbstractMessage::ERROR);
+
         }
 
         $this->redirect('list');
@@ -187,7 +223,7 @@ class ProductAreaController extends ActionController
      */
     public function deleteAction(ProductArea $productArea) : void
     {
-        $this->addFlashMessage('The object was deleted. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/p/friendsoftypo3/extension-builder/master/en-us/User/Index.html', '', AbstractMessage::WARNING);
+        $this->addFlashMessage('The record was deleted.', 'Deleted', AbstractMessage::WARNING);
         $this->productAreaRepository->remove($productArea);
         $this->redirect('list');
     }
@@ -202,13 +238,39 @@ class ProductAreaController extends ActionController
         return $this->htmlResponse();
     }
 
-    public function getUploadedFileData(string $tmpName, string $fileName): File
+    private function getUploadedFileData(string $tmpName, string $fileName): File
     {
         $resourceFactory = GeneralUtility::makeInstance(ResourceFactory::class);
         $storage = $resourceFactory->getDefaultStorage();
         $folderPath = $storage->getRootLevelFolder();
         $newFile = $storage->addFile($tmpName, $folderPath,$fileName);
         return $newFile;
+
+    }
+
+    private function createSlug(string $tableName, ProductArea $productArea): string
+    {
+        $fieldName = 'slug';
+        $fieldConfig = $GLOBALS['TCA'][$tableName]['columns'][$fieldName]['config'] ?? [];
+
+        $recordData = [
+            'uid' => $productArea->getUid(),
+            'pid' => $productArea->getPid(),
+            'slug' => $productArea->getSlug(),
+            'name' => $productArea->getName()
+        ];
+
+        $state = RecordStateFactory::forName($tableName)
+            ->fromArray($recordData, $productArea->getPid(), $productArea->getUid());
+
+        $slugHelper = GeneralUtility::makeInstance(
+            SlugHelper::class,
+            $tableName,
+            $fieldName,
+            $fieldConfig);
+
+        return $productArea->getSlug() === '' ? $slugHelper->buildSlugForUniqueInTable(
+            str_replace('/', '-', $productArea->getName()), $state) : $productArea->getSlug();
 
     }
 }
