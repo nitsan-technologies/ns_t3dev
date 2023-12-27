@@ -8,3 +8,4 @@
 # Documentation
 
 * [Documentation of Security Guidelines](Documentation/SecurityGuidelines/Guidelines.md)
+* [Documentation of Frontend CRUD Operation](Documentation/FrontendCRUDOprations/CRUD.md)
