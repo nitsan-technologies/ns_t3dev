@@ -13,3 +13,5 @@
 * [Documentation of Frontend CRUD Operation](Documentation/FrontendCRUDOprations/CRUD.md)
 * [All about TYPO3 Unit Tests and Functional Tests](Documentation/PHPUnitTest/PHPUnitTest.md)
 * [Documentation of Custom Error Handling](Documentation/ErrorHandling/ErrorHandling.md)
+* [How to use logger](Documentation/Logging/Logging.md)
+
