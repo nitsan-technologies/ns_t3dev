@@ -36,6 +36,19 @@
 			<trans-unit id="tx_ns_t3dev_validation.description" resname="tx_ns_t3dev_validation.description">
 				<source>Client side validation demo form</source>
 			</trans-unit>
+
+			<trans-unit id="tx_nst3dev_domain_model_log" resname="tx_nst3dev_domain_model_log">
+				<source>Logs</source>
+			</trans-unit>
+			<trans-unit id="tx_nst3dev_domain_model_log.level" resname="tx_nst3dev_domain_model_log.level">
+				<source>Level</source>
+			</trans-unit>
+			<trans-unit id="tx_nst3dev_domain_model_log.message" resname="tx_nst3dev_domain_model_log.message">
+				<source>Message</source>
+			</trans-unit>
+			<trans-unit id="tx_nst3dev_domain_model_log.data" resname="tx_nst3dev_domain_model_log.data">
+				<source>Data</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

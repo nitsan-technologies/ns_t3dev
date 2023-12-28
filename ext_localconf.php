@@ -1,36 +1,45 @@
 <?php
+
+use NITSAN\NsT3dev\Controller\ProductAreaController;
+use TYPO3\CMS\Core\Imaging\IconRegistry;
+use TYPO3\CMS\Core\Log\LogLevel;
+use TYPO3\CMS\Core\Log\Writer\DatabaseWriter;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
+
 defined('TYPO3') || die();
 
 (static function() {
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    ExtensionUtility::configurePlugin(
         'NsT3dev',
         'Listing',
         [
-            \NITSAN\NsT3dev\Controller\ProductAreaController::class => 'list, new, create, edit, update, delete'
+            ProductAreaController::class => 'list, new, create, edit, update, delete'
         ],
         // non-cacheable actions
         [
-            \NITSAN\NsT3dev\Controller\ProductAreaController::class => 'create, update, delete'
+            ProductAreaController::class => 'create, update, delete'
         ]
     );
 
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    ExtensionUtility::configurePlugin(
         'NsT3dev',
         'Show',
         [
-            \NITSAN\NsT3dev\Controller\ProductAreaController::class => 'show'
+            ProductAreaController::class => 'show'
         ],
     );
 
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    ExtensionUtility::configurePlugin(
         'NsT3dev',
         'Validation',
         [
-            \NITSAN\NsT3dev\Controller\ProductAreaController::class => 'validation'
+            ProductAreaController::class => 'validation'
         ],
     );
 
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:ns_t3dev/Configuration/PageTSconfig/setup.tsconfig">');
+    ExtensionManagementUtility::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:ns_t3dev/Configuration/PageTSconfig/setup.tsconfig">');
 
 
     // Set Plugin Icon
@@ -40,7 +49,7 @@ defined('TYPO3') || die();
         'ns_t3dev-plugin-validation'
 
     ];
-    $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
+    $iconRegistry = GeneralUtility::makeInstance(IconRegistry::class);
     foreach ($pluginsIdentifiers as $identifier) {
         $iconRegistry->registerIcon(
             $identifier,
@@ -49,4 +58,11 @@ defined('TYPO3') || die();
         );
     }
 
+    $GLOBALS['TYPO3_CONF_VARS']['LOG']['NsT3dev']['ProductArea']['Controller']['writerConfiguration'] = [
+        LogLevel::DEBUG => [
+            DatabaseWriter::class => [
+                'logTable' => 'tx_nst3dev_domain_model_log',
+            ],
+        ],
+    ];
 })();

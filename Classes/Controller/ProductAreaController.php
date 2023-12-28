@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace NITSAN\NsT3dev\Controller;
 
 use Error;
+use NITSAN\NsT3dev\Domain\Repository\LogRepository;
 use TYPO3\CMS\Core\DataHandling\Model\RecordStateFactory;
 use TYPO3\CMS\Core\DataHandling\SlugHelper;
 use TYPO3\CMS\Core\Exception;
@@ -21,6 +22,7 @@ use NITSAN\NsT3dev\Event\FrontendRendringEvent;
 use Psr\Http\Message\ResponseInterface;
 use NITSAN\NsT3dev\Domain\Repository\ProductAreaRepository;
 use NITSAN\NsT3dev\Domain\Model\ProductArea;
+use NITSAN\NsT3dev\Domain\Model\Log;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use Psr\Log\LoggerAwareInterface;
@@ -56,12 +58,21 @@ class ProductAreaController extends ActionController implements LoggerAwareInter
      */
     protected $productAreaRepository;
 
+    /**
+     * LogRepository
+     *
+     * @var LogRepository
+     */
+    protected LogRepository $logRepository;
+
 
     public function __construct(
-        ProductAreaRepository $productAreaRepository
+        ProductAreaRepository $productAreaRepository,
+        LogRepository $logRepository
     )
     {
         $this->productAreaRepository = $productAreaRepository;
+        $this->logRepository = $logRepository;
         $this->persistenceManager = GeneralUtility::makeInstance(PersistenceManager::class);
         $this->logger = GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
     }
@@ -135,7 +146,7 @@ class ProductAreaController extends ActionController implements LoggerAwareInter
      *
      * @param ProductArea $newProductArea
      */
-    public function createAction(ProductArea $newProductArea)
+    public function createAction(ProductArea $newProductArea): void
     {
         try{
             $this->productAreaRepository->add($newProductArea);
@@ -148,6 +159,16 @@ class ProductAreaController extends ActionController implements LoggerAwareInter
                 $newProductArea->setSlug($slug);
                 $this->productAreaRepository->update($newProductArea);
             }catch (IllegalObjectTypeException  | UnknownObjectException | Error $exception){
+                $exceptionArray = [
+                    'message' => $exception->getMessage(),
+                    'file' =>  $exception->getFile(),
+                    'line' =>  $exception->getLine()
+                ];
+                $log = GeneralUtility::makeInstance(Log::class);
+                $log->setMessage('The record is disabled due to slug is missing');
+                $log->setData(json_encode($exceptionArray));
+                $log->setLevel(2);
+                $this->logRepository->add($log);
                 $newProductArea->setHidden(true);
                 $this->productAreaRepository->update($newProductArea);
                 $this->logger->error(
@@ -180,7 +201,7 @@ class ProductAreaController extends ActionController implements LoggerAwareInter
                 );
             }
             $this->addFlashMessage('The object was created', '', AbstractMessage::INFO);
-        }catch (Error $exception){
+        }catch (IllegalObjectTypeException | Error $exception){
 
             $this->logger->error(
                 'An error was occurred in insertion operation'.$exception->getMessage()
