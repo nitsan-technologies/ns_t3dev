@@ -14,4 +14,4 @@
 * [All about TYPO3 Unit Tests and Functional Tests](Documentation/PHPUnitTest/PHPUnitTest.md)
 * [Documentation of Custom Error Handling](Documentation/ErrorHandling/ErrorHandling.md)
 * [How to use logger](Documentation/Logging/Logging.md)
-
+* [How to Register/Implement a service](Documentation/Service/Service.md)

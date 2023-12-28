@@ -67,4 +67,21 @@ defined('TYPO3') || die();
             ],
         ],
     ];
+
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addService(
+        'ns_t3dev', // Extension Key
+        'auth' ,// Service type
+        NITSAN\NsT3dev\Service\LoginAuthService::class ,// Service key
+        array(
+            'title' => 'Authentification for Login Service',
+            'description' => 'Authentication for users',
+            'subtype' => 'authUserFE,getUserFE',
+            'available' => true,
+            'priority' => 82, /* will be called before default typo3 authentication service */
+            'quality' => 82,
+            'os' => '',
+            'exec' => '',
+            'className' => NITSAN\NsT3dev\Service\LoginAuthService::class,
+        )
+    );
 })();
