@@ -19,6 +19,5 @@ CREATE TABLE tx_nst3dev_domain_model_log
 
 	PRIMARY KEY (uid),
 	KEY parent (pid),
-	KEY t3ver_oid (t3ver_oid,t3ver_wsid),
 	KEY language (l10n_parent,sys_language_uid)
 );
