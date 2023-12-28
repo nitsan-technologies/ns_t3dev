@@ -23,11 +23,11 @@ Services parameters description
 How to register and implement a service
 =============================================
 * The class file for your service should be located in the `Classes/Service` directory.
-* You must be register your service in the extension's `ext_localconf.php` file.
+* You must register your service in the extension's `ext_localconf.php` file.
 * A service is registered with TYPO3 by calling `\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addService()`. [For example](https://github.com/nitsan-technologies/ns_t3dev/blob/main/ext_localconf.php#L69)
 
 ---------------------------------------------------------
-### Image references for configuration:
+### Image reference:
 * If you want to see the your service has been registered or not then you can check with below reference image.
 ![Serive Registered](Images/CustomService.png "Registered Service")
 
