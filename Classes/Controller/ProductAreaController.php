@@ -17,6 +17,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
 use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
+use TYPO3\CMS\Extbase\Persistence\Generic\Exception\UnsupportedMethodException;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use NITSAN\NsT3dev\Event\FrontendRendringEvent;
 use Psr\Http\Message\ResponseInterface;
@@ -158,7 +159,8 @@ class ProductAreaController extends ActionController implements LoggerAwareInter
                     $newProductArea);
                 $newProductArea->setSlug($slug);
                 $this->productAreaRepository->update($newProductArea);
-            }catch (IllegalObjectTypeException  | UnknownObjectException | Error $exception){
+            }catch (IllegalObjectTypeException  | UnknownObjectException | UnsupportedMethodException  | Error $exception){
+
                 $exceptionArray = [
                     'message' => $exception->getMessage(),
                     'file' =>  $exception->getFile(),
@@ -196,12 +198,10 @@ class ProductAreaController extends ActionController implements LoggerAwareInter
                     );
                 }
             }else{
-                $this->logger->warning(
-                    'Image is not added into this record '.$newProductArea->getUid()
-                );
+                $this->logger->info('An example of info log into custom table, Here record is created without image'.$newProductArea->getUid());
             }
             $this->addFlashMessage('The object was created', '', AbstractMessage::INFO);
-        }catch (IllegalObjectTypeException | Error $exception){
+        }catch (IllegalObjectTypeException |  Error $exception){
 
             $this->logger->error(
                 'An error was occurred in insertion operation'.$exception->getMessage()
