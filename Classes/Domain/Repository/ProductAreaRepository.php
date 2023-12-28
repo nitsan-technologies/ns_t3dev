@@ -4,11 +4,19 @@ declare(strict_types=1);
 
 namespace NITSAN\NsT3dev\Domain\Repository;
 
+use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Driver\Exception;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\SysLog\Action as SystemLogGenericAction;
 use TYPO3\CMS\Core\SysLog\Error as SystemLogErrorClassification;
 use TYPO3\CMS\Core\SysLog\Type as SystemLogType;
+use TYPO3\CMS\Core\Database\Query\QueryBuilder;
+use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
+use TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException;
+use TYPO3\CMS\Extbase\Persistence\QueryInterface;
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 
 /**
  * This file is part of the "T3 Dev" Extension for TYPO3 CMS.
@@ -24,6 +32,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class ProductAreaRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
+    private const TABLE = 'tx_nst3dev_domain_model_productarea';
+    protected $defaultOrderings = ['crdate' => QueryInterface::ORDER_DESCENDING];
 
     public function updateSysFileReferenceRecord(
         int $uid_local,
@@ -126,5 +136,112 @@ class ProductAreaRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 ['userid', 'type', 'channel', 'action', 'error', 'level', 'details_nr', 'details', 'IP', 'tstamp', 'workspace']
             );
         }
+    }
+
+    /**
+     * @param array $filterData
+     * @return QueryResultInterface|array
+     * @throws InvalidQueryException
+     */
+    public function findData(array $filterData): QueryResultInterface|array
+    {
+        $query = $this->createQuery();
+        $constraints = [];
+
+        if ($searchWord = $filterData['searchWord'] ?? '') {
+            $constraints[] = $query->logicalOr([
+                $query->like('name', '%' .$searchWord . '%'),
+                $query->like('description', '%' . $searchWord . '%')
+            ]);
+        }
+
+        if ($selectType = $filterData['selectType'] ?? '') {
+            $constraints[] = $query->equals('type', $selectType);
+        }
+
+        $query->matching($query->logicalAnd($constraints));
+        return $query->execute();
+    }
+
+
+    /**
+     * @param array|null $filterData
+     * @return array
+     * @throws DBALException
+     * @throws Exception
+     */
+    public function findDataWithQueryBuilder(array $filterData = null): array
+    {
+        $includeHidden = (bool)($filterData['hidden'] ?? false);
+        $includeDeleted = (bool)($filterData['deleted'] ?? false);
+        $query = $this->getQueryForProductList($includeHidden, $includeDeleted);
+
+        if ($searchWord = $filterData['searchWord'] ?? '') {
+            $whereExpressions = [
+                $query->expr()->like('name', $query->createNamedParameter('%' . $query->escapeLikeWildcards($searchWord) . '%')),
+                $query->expr()->like('description', $query->createNamedParameter('%' . $query->escapeLikeWildcards($searchWord) . '%')),
+            ];
+            $query->orWhere(...$whereExpressions);
+        }
+
+        if ($selectType = $filterData['selectType'] ?? '') {
+            $query->andWhere($query->expr()->eq('type', $query->createNamedParameter($selectType)));
+        }
+        $query->orderBy('crdate', 'DESC');
+        return $query->execute()->fetchAllAssociative();
+    }
+
+    /**
+     * @param array|null $filterData
+     * @return array|false
+     * @throws DBALException
+     * @throws Exception
+     */
+    public function countDataWithExpression(array $filterData = null): array|false
+    {
+        $includeHidden = (bool)($filterData['hidden'] ?? false);
+        $includeDeleted = (bool)($filterData['deleted'] ?? false);
+        $query = $this->getQueryForProductList($includeHidden, $includeDeleted);
+
+        if ($searchWord = $filterData['searchWord'] ?? '') {
+            $whereExpressions = [
+                $query->expr()->like('name', $query->createNamedParameter($query->escapeLikeWildcards($searchWord) . '%')),
+                $query->expr()->like('description', $query->createNamedParameter($query->escapeLikeWildcards($searchWord) . '%')),
+            ];
+            $query->orWhere(...$whereExpressions);
+        }
+
+        if ($selectType = $filterData['selectType'] ?? '') {
+            $query->andWhere($query->expr()->eq('type', $query->createNamedParameter($selectType)));
+        }
+
+        return  $query->addSelectLiteral(
+            $query->expr()->count('uid','countedData')
+        )
+            ->executeQuery()
+            ->fetchAssociative();
+    }
+
+
+    /**
+     * @param bool $includeHidden
+     * @param bool $includeDeleted
+     * @return QueryBuilder
+     */
+    private function getQueryForProductList(bool $includeHidden = false, bool $includeDeleted = false): QueryBuilder
+    {
+        $q = GeneralUtility::makeInstance(ConnectionPool::class)
+            ->getQueryBuilderForTable(self::TABLE);
+
+        if($includeHidden) {
+            $q->getRestrictions()->removeByType(HiddenRestriction::class);
+        }
+
+        if($includeDeleted) {
+            $q->getRestrictions()->removeByType(DeletedRestriction::class);
+        }
+
+        return  $q->from(self::TABLE)
+            ->select('*');
     }
 }

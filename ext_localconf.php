@@ -39,14 +39,21 @@ defined('TYPO3') || die();
         ],
     );
 
-    ExtensionManagementUtility::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:ns_t3dev/Configuration/PageTSconfig/setup.tsconfig">');
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+        'NsT3dev',
+        'ExampleForDBAL',
+        [
+            \NITSAN\NsT3dev\Controller\ProductAreaController::class => 'listForDatabase'
+        ],
+    );
 
 
     // Set Plugin Icon
     $pluginsIdentifiers = [
         'ns_t3dev-plugin-listing',
         'ns_t3dev-plugin-show',
-        'ns_t3dev-plugin-validation'
+        'ns_t3dev-plugin-validation',
+        'ns_t3dev-plugin-ExampleForDBAL'
 
     ];
     $iconRegistry = GeneralUtility::makeInstance(IconRegistry::class);
@@ -71,7 +78,7 @@ defined('TYPO3') || die();
         'auth' ,// Service type
         NITSAN\NsT3dev\Service\LoginAuthService::class ,// Service key
         array(
-            'title' => 'Authentification for Login Service',
+            'title' => 'Authentication for Login Service',
             'description' => 'Authentication for users',
             'subtype' => 'authUserFE,getUserFE',
             'available' => true,

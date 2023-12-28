@@ -2,6 +2,11 @@ const paginateLinks = document.querySelectorAll(".paginate");
 var products = document.querySelector('.product-items');
 var paginationClass = document.querySelector(".pagination-load-wrap");
 var loader = document.querySelector(".product-loader");
+var searchField = document.getElementById("search_input");
+var searchSelect = document.getElementById("search_select");
+var resetButton = document.getElementById("reset");
+console.log(searchSelect.value)
+console.log(searchField.value)
 
 const paginate = function(event) {
     let url = this.getAttribute("href");
@@ -52,3 +57,7 @@ if(paginateLinks.length > 0) {
 
     }
 }
+
+resetButton.addEventListener('click',()=> {
+  window.location.href = window.location.href
+});

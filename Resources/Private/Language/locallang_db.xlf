@@ -48,6 +48,11 @@
 			</trans-unit>
 			<trans-unit id="tx_nst3dev_domain_model_log.data" resname="tx_nst3dev_domain_model_log.data">
 				<source>Data</source>
+			<trans-unit id="tx_ns_t3dev_examplefordbal.name" resname="tx_ns_t3dev_examplefordbal.name">
+				<source>Example for DBAL</source>
+			</trans-unit>
+			<trans-unit id="tx_ns_t3dev_examplefordbal.description" resname="tx_ns_t3dev_examplefordbal.description">
+				<source>CRUD with many ways.</source>
 			</trans-unit>
 		</body>
 	</file>
