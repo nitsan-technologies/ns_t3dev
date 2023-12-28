@@ -53,6 +53,8 @@ class ProductArea extends AbstractEntity
      */
     protected string $slug = '';
 
+    protected bool $hidden = false;
+
     /**
      * Returns the name
      *
@@ -146,5 +148,21 @@ class ProductArea extends AbstractEntity
     public function removeImage(FileReference $img): void
     {
         $this->image->detach($img);
+    }
+
+    /**
+     * @param bool $hidden
+     */
+    public function setHidden($hidden): void
+    {
+        $this->hidden = $hidden;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getHidden(): bool
+    {
+        return $this->hidden;
     }
 }
