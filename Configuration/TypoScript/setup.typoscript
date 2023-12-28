@@ -7,10 +7,7 @@ plugin.tx_nst3dev_listing {
         layoutRootPaths.0 = EXT:ns_t3dev/Resources/Private/Layouts/
         layoutRootPaths.1 = {$plugin.tx_nst3dev_listing.view.layoutRootPath}
     }
-    persistence {
-        storagePid = {$plugin.tx_nst3dev_listing.persistence.storagePid}
-        #recursive = 1
-    }
+
     features {
         #skipDefaultArguments = 1
         # if set to 1, the enable fields are ignored in BE context
@@ -44,10 +41,7 @@ plugin.tx_nst3dev_show {
         layoutRootPaths.0 = EXT:ns_t3dev/Resources/Private/Layouts/
         layoutRootPaths.1 = {$plugin.tx_nst3dev_show.view.layoutRootPath}
     }
-    persistence {
-        storagePid = {$plugin.tx_nst3dev_show.persistence.storagePid}
-        #recursive = 1
-    }
+
     features {
         #skipDefaultArguments = 1
         # if set to 1, the enable fields are ignored in BE context

@@ -7,10 +7,7 @@ plugin.tx_nst3dev_listing {
         # cat=plugin.tx_nst3dev_listing/file; type=string; label=Path to template layouts (FE)
         layoutRootPath = EXT:ns_t3dev/Resources/Private/Layouts/
     }
-    persistence {
-        # cat=plugin.tx_nst3dev_listing//a; type=string; label=Default storage PID
-        storagePid =
-    }
+
     settings{
         paginationLib = EXT:ns_t3dev/Resources/Public/dist/pagination.js
         validationLib = EXT:ns_t3dev/Resources/Public/dist/pristine.js
@@ -28,8 +25,5 @@ plugin.tx_nst3dev_show {
         # cat=plugin.tx_nst3dev_show/file; type=string; label=Path to template layouts (FE)
         layoutRootPath = EXT:ns_t3dev/Resources/Private/Layouts/
     }
-    persistence {
-        # cat=plugin.tx_nst3dev_show//a; type=string; label=Default storage PID
-        storagePid =
-    }
+
 }

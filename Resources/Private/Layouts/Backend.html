@@ -1,0 +1,24 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<div class="tx-ns-t3dev">
+
+    <f:be.container
+        pageTitle="{f:translate(key: 'pagetitle')}"
+        includeRequireJsModules="{
+            0:'TYPO3/CMS/NsT3dev/Main'
+        }"
+        addJsInlineLabels="{0: 'buttons.confirm.delete_record.no',
+            1: 'buttons.confirm.delete_record.yes'
+        }"
+    >
+        <link rel="stylesheet" type="text/css" href="{f:uri.resource(path:'Css/Bootstrap/css/bootstrap.min.css', extensionName: 'ns_t3dev')}" media="all">
+        <div class="module-body">
+            <f:flashMessages />
+
+            <f:render section="content" />
+        </div>
+
+    </f:be.container>
+
+</div>
+</html>
+

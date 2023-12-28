@@ -1,0 +1,74 @@
+<html data-namespace-typo3-fluid="true"
+      xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
+>
+
+<f:layout name="Backend" />
+
+<f:section name="content">
+
+<div class="d-flex flex-row-reverse">
+    <div class="p-2 me-5 mt-4">
+
+        <be:link.newRecord class="btn btn-success" table="tx_nst3dev_domain_model_productarea" pid="{page_id}" >
+            New ProductArea
+        </be:link.newRecord>
+    </div>
+</div>
+
+    <f:if condition="{pagination.paginator.paginatedItems -> f:count()}">
+        <f:then>
+            <f:if condition="!{validationResults.flattenedErrors}">
+                <f:flashMessages />
+            </f:if>
+            <div class="container">
+
+                <h1>Listing for ProductArea</h1>
+                <f:flashMessages />
+
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Image</th>
+                        <th>Action</th>
+                    </tr>
+
+                    <f:for each="{pagination.paginator.paginatedItems}" as="product" iteration="iterator">
+                        <tr>
+                            <td>
+                                <h5 class="card-title">{product.name}</h5>
+                            </td>
+                            <td>
+                                <f:format.html>{product.description -> f:format.crop(maxCharacters: 100)}</f:format.html>
+                            </td>
+                            <td>
+                                <f:if condition="{product.image}">
+                                    <f:image image="{product.image.0}" class="img-fluid rounded-start" alt="image" width="200px" />
+                                </f:if>
+                            </td>
+                            <td>
+                                <f:link.action class="btn btn-primary" action="show" arguments="{productArea:product}">Details</f:link.action>
+                                <be:link.editRecord class="btn btn-warning" uid="{product.uid}" table="tx_nst3dev_domain_model_productarea"  >Edit </be:link.editRecord>
+
+                                <f:link.action  action="delete" arguments="{productArea:product}" class="btn btn-danger removeTrigger">
+                                    Delete
+                                </f:link.action>
+
+
+                            </td>
+                        </tr>
+                    </f:for>
+                </table>
+
+                <f:render partial="Backend/ProductArea/Pagination" arguments="{pagination: pagination.pagination, paginator: pagination.paginator, actionName: 'list'}" />
+            </div>
+        </f:then>
+        <f:else>
+            <div class="p-5">
+                No record found
+            </div>
+        </f:else>
+    </f:if>
+</f:section>
+</html>

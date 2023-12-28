@@ -1,0 +1,28 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Backend" />
+
+<f:section name="content">
+    <h1>Single View for ProductArea</h1>
+
+    <f:flashMessages />
+
+    <div class="card mb-3" >
+        <div class="row g-0">
+            <div class="col-md-4">
+                <f:if condition="{productArea.image}">
+                    <f:for each="{productArea.image}" as="image">
+                        <f:image image="{image}" width="200"/>
+                    </f:for>
+                </f:if>
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">{productArea.name}</h5>
+                    <p class="card-text"><f:format.html>{productArea.description}</f:format.html></p>
+                    <p class="card-text"><small class="text-muted"> <f:link.action action="list">Back to list</f:link.action></small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</f:section>
+</html>
