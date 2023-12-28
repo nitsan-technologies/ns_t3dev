@@ -58,8 +58,10 @@ defined('TYPO3') || die();
         );
     }
 
-    $GLOBALS['TYPO3_CONF_VARS']['LOG']['NsT3dev']['ProductArea']['Controller']['writerConfiguration'] = [
-        LogLevel::DEBUG => [
+
+
+    $GLOBALS['TYPO3_CONF_VARS']['LOG']['NITSAN']['NsT3dev']['Controller']['writerConfiguration'] = [
+        LogLevel::INFO => [
             DatabaseWriter::class => [
                 'logTable' => 'tx_nst3dev_domain_model_log',
             ],
