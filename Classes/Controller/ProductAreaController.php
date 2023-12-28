@@ -25,6 +25,12 @@ use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Log\LogManager;
+use TYPO3\CMS\Core\SysLog\Action as SystemLogGenericAction;
+use TYPO3\CMS\Core\SysLog\Error as SystemLogErrorClassification;
+use TYPO3\CMS\Core\SysLog\Type as SystemLogType;
+
 
 /**
  * This file is part of the "T3 Dev" Extension for TYPO3 CMS.
@@ -57,6 +63,7 @@ class ProductAreaController extends ActionController implements LoggerAwareInter
     {
         $this->productAreaRepository = $productAreaRepository;
         $this->persistenceManager = GeneralUtility::makeInstance(PersistenceManager::class);
+        $this->logger = GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
     }
 
     /**
@@ -70,21 +77,34 @@ class ProductAreaController extends ActionController implements LoggerAwareInter
             new FrontendRendringEvent()
         );
         $productAreas = $this->productAreaRepository->findAll();
-        $currentPage = $this->request->hasArgument('currentPage')
-            ? (int)$this->request->getArgument('currentPage')
-            : 1;
-        $itemsPerPage = $this->settings['itemsPerPage'] ? $this->settings['itemsPerPage'] : 5;
-        $maximumLinks = 15;
-        $paginator = new QueryResultPaginator($productAreas,$currentPage,intval($itemsPerPage));
-        $pagination = new SimplePagination($paginator,$maximumLinks);
-        $this->view->assign(
-            'pagination',
-            [
-                'pagination' => $pagination,
-                'paginator' => $paginator,
-            ]
-        );
-        $this->view->assign('productAreas', $productAreas);
+
+        if(count($productAreas) > 0){
+            $currentPage = $this->request->hasArgument('currentPage')
+                ? (int)$this->request->getArgument('currentPage')
+                : 1;
+            $itemsPerPage = $this->settings['itemsPerPage'] ? $this->settings['itemsPerPage'] : 5;
+            $maximumLinks = 15;
+            $paginator = new QueryResultPaginator($productAreas,$currentPage,intval($itemsPerPage));
+            $pagination = new SimplePagination($paginator,$maximumLinks);
+            $this->view->assign(
+                'pagination',
+                [
+                    'pagination' => $pagination,
+                    'paginator' => $paginator,
+                ]
+            );
+            $this->view->assign('productAreas', $productAreas);
+        } else {
+            $logTitle = 'Data Error';
+            $logMessage = 'Something went awry, No Data Found!';
+            $this->logger->warning($logMessage);
+            try {
+                // Write error message to sys_log table
+                $this->writeErrorLog($logMessage);
+            } catch (\Exception $exception) {
+            }
+        }
+
         return $this->htmlResponse();
     }
 
@@ -271,6 +291,31 @@ class ProductAreaController extends ActionController implements LoggerAwareInter
 
         return $productArea->getSlug() === '' ? $slugHelper->buildSlugForUniqueInTable(
             str_replace('/', '-', $productArea->getName()), $state) : $productArea->getSlug();
+    }
 
+    /**
+     * Writes an error in the sys_log table
+     *
+     * @param string $logMessage Default text that follows the message (in english!).
+     */
+    protected function writeErrorLog($logMessage)
+    {
+        $connection = GeneralUtility::makeInstance(ConnectionPool::class)
+            ->getConnectionForTable('sys_log');
+
+        if (!$connection->isConnected()) {
+            return;
+        }
+        $workspace = 0;
+        $userId = 0;
+        if(isset($GLOBALS['BE_USER']->user)){
+            $backendUser = $GLOBALS['BE_USER']->user;
+            if (isset($backendUser['uid'])) {
+                $userId = $backendUser['uid'];
+            }
+
+        }
+
+        $this->productAreaRepository->generateErrorLog($userId,$logMessage,$workspace);
     }
 }

@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace NITSAN\NsT3dev\Domain\Repository;
 
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\SysLog\Action as SystemLogGenericAction;
+use TYPO3\CMS\Core\SysLog\Error as SystemLogErrorClassification;
+use TYPO3\CMS\Core\SysLog\Type as SystemLogType;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -94,5 +97,34 @@ class ProductAreaRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             ->execute()
             ->fetchAllAssociative();
         return count($row);
+    }
+
+    public function generateErrorLog($userId,$logMessage,$workspace){
+
+        $tableConnectionCategoryMM = GeneralUtility::makeInstance(ConnectionPool::class)
+            ->getConnectionForTable('sys_log');
+
+
+        $logdata[$userId] = [
+            'userid' => $userId,
+            'type' => SystemLogType::ERROR,
+            'channel' => SystemLogType::toChannel(SystemLogType::ERROR),
+            'action' => SystemLogGenericAction::UNDEFINED,
+            'error' => SystemLogErrorClassification::SYSTEM_ERROR,
+            'level' => SystemLogType::toLevel(SystemLogType::ERROR),
+            'details_nr' => 0,
+            'details' => str_replace('%', '%%', $logMessage),
+            'IP' => (string)GeneralUtility::getIndpEnv('REMOTE_ADDR'),
+            'tstamp' => $GLOBALS['EXEC_TIME'],
+            'workspace' => $workspace,
+        ];
+
+        if (!empty($logdata)) {
+            $tableConnectionCategoryMM->bulkInsert(
+                'sys_log',
+                array_values($logdata),
+                ['userid', 'type', 'channel', 'action', 'error', 'level', 'details_nr', 'details', 'IP', 'tstamp', 'workspace']
+            );
+        }
     }
 }
