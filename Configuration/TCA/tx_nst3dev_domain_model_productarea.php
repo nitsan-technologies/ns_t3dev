@@ -20,7 +20,7 @@ return [
         'iconfile' => 'EXT:ns_t3dev/Resources/Public/Icons/ext_domain product.png'
     ],
     'types' => [
-        '1' => ['showitem' => 'name, slug, image, description, --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language, sys_language_uid, l10n_parent, l10n_diffsource, --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access, hidden, starttime, endtime'],
+        '1' => ['showitem' => 'name, slug, type, image, description, --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language, sys_language_uid, l10n_parent, l10n_diffsource, --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access, hidden, starttime, endtime'],
     ],
     'columns' => [
         'sys_language_uid' => [
@@ -154,7 +154,7 @@ return [
                 ],
                 $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext']
             ),
-            
+
         ],
         'description' => [
             'exclude' => true,
@@ -172,7 +172,7 @@ return [
                 'rows' => 15,
                 'eval' => 'trim',
             ],
-            
+
         ],
         'slug' => [
             'exclude' => true,
@@ -190,8 +190,19 @@ return [
                 'fallbackCharacter' => '-',
                 'eval' => 'uniqueInPid',
             ],
-            
         ],
-    
+        'type' => [
+            'exclude' => false,
+            'label' => 'LLL:EXT:ns_t3dev/Resources/Private/Language/locallang.xlf:product.type',
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'items' => [
+                    ['LLL:EXT:ns_t3dev/Resources/Private/Language/locallang.xlf:select.option',''],
+                    ['LLL:EXT:ns_t3dev/Resources/Private/Language/locallang.xlf:select.option.1', 'T3Planet'],
+                    ['LLL:EXT:ns_t3dev/Resources/Private/Language/locallang.xlf:select.option.2', 'NITSAN'],
+                ],
+            ],
+        ],
     ],
 ];

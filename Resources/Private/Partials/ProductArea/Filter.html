@@ -1,0 +1,43 @@
+<f:form id="filter_form" action="{actionName}">
+    <div class="form-row align-items-center">
+        <div class="col-auto">
+            <f:form.textfield name="searchWord" id="search_input" class="form-control mb-2"
+                              placeholder="{f:translate(key: 'filter-form.text-field.placeholder')}"
+                              value="{f:if(condition: filterData.searchWord, then: '{filterData.searchWord}')}"/>
+        </div>
+        <div class="col-auto">
+            <div class="input-group mb-2">
+                <f:form.select class="custom-select mr-sm-2" id="search_select" name="selectType">
+                    <f:form.select.option value=""
+                                          selected="{f:if(condition:'{filterData.selectType} == '' ',then:'selected')}">
+                        <f:translate key="select.option" />
+                    </f:form.select.option>
+                    <f:form.select.option value="T3Planet"
+                                          selected="{f:if(condition:'{filterData.selectType} == T3Planet ',then:'selected')}">
+                        <f:translate key="select.option.1" />
+                    </f:form.select.option>
+                    <f:form.select.option value="NITSAN"
+                                          selected="{f:if(condition:'{filterData.selectType}==NITSAN',then:'selected')}">
+                        <f:translate key="select.option.2" />
+                    </f:form.select.option>
+                </f:form.select>
+            </div>
+        </div>
+        <f:if condition="{includeHidden}">
+            <div class="form-check form-check-inline">
+                <f:form.checkbox class="form-check-input" name="hidden" value="true" id="select_checkbox1"
+                                 checked="{f:if(condition: filterData.hidden, then: 'checked')}"/>
+                <label class="form-check-label" for="select_checkbox1"><f:translate key="checkbox.option.1" /></label>
+            </div>
+            <div class="form-check form-check-inline">
+                <f:form.checkbox class="form-check-input" name="deleted" value="true" id="select_checkbox2"
+                                 checked="{f:if(condition: filterData.deleted, then: 'checked')}"/>
+                <label class="form-check-label" for="select_checkbox2"><f:translate key="checkbox.option.2" /></label>
+            </div>
+        </f:if>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-outline-primary mb-2" id="filter"><f:translate key="filter-form.submit" /></button>
+            <button type="reset" class="btn btn-outline-danger mb-2" id="reset"><f:translate key="filter-form.reset" /></button>
+        </div>
+    </div>
+</f:form>
