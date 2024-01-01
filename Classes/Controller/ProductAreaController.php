@@ -9,6 +9,7 @@ use NITSAN\NsT3dev\Domain\Repository\LogRepository;
 use TYPO3\CMS\Core\DataHandling\Model\RecordStateFactory;
 use TYPO3\CMS\Core\DataHandling\SlugHelper;
 use TYPO3\CMS\Core\Exception;
+use TYPO3\CMS\Core\Pagination\ArrayPaginator;
 use TYPO3\CMS\Core\Pagination\SimplePagination;
 use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Resource\FileRepository;
@@ -88,7 +89,13 @@ class ProductAreaController extends ActionController implements LoggerAwareInter
         $this->eventDispatcher->dispatch(
             new FrontendRendringEvent()
         );
-        $productAreas = $this->productAreaRepository->findAll();
+        $filterData = $this->request->getParsedBody()['tx_nst3dev_listing'];
+        if ($filterData['searchWord'] || $filterData['selectType']) {
+            $productAreas = $this->productAreaRepository->findData($filterData);
+            $this->view->assign('filterData', $filterData);
+        } else {
+            $productAreas = $this->productAreaRepository->findAll();
+        }
 
         if(count($productAreas) > 0){
             $currentPage = $this->request->hasArgument('currentPage')
@@ -338,5 +345,22 @@ class ProductAreaController extends ActionController implements LoggerAwareInter
         }
 
         $this->productAreaRepository->generateErrorLog($userId,$logMessage,$workspace);
+    }
+
+    public function listForDatabaseAction(): ResponseInterface
+    {
+        $filterData = $this->request->getParsedBody()['tx_nst3dev_examplefordbal'];
+        if ($filterData) {
+            $productAreas = $this->productAreaRepository->findDataWithQueryBuilder($filterData);
+            $this->view->assign('filterData', $filterData);
+        } else {
+            $productAreas = $this->productAreaRepository->findDataWithQueryBuilder();
+        }
+        $countProduct = $this->productAreaRepository->countDataWithExpression($filterData);
+        $this->view->assignMultiple([
+            'productAreas' => $productAreas,
+            'count' => $countProduct['countedData']
+        ]);
+        return $this->htmlResponse();
     }
 }

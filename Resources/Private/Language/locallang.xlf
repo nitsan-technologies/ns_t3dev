@@ -75,6 +75,43 @@
 			<trans-unit id="record.details">
 				<source>Details</source>
 			</trans-unit>
+			<trans-unit id="record.no-record">
+				<source>No result found</source>
+			</trans-unit>
+			<trans-unit id="record.total">
+				<source>Total data</source>
+			</trans-unit>
+			<trans-unit id="loader.text">
+				<source>Loading...</source>
+			</trans-unit>
+			<trans-unit id="product.type">
+				<source>Product type</source>
+			</trans-unit>
+
+			<trans-unit id="filter-form.text-field.placeholder">
+				<source>Enter name,description..</source>
+			</trans-unit>
+			<trans-unit id="select.option">
+				<source>Select</source>
+			</trans-unit>
+			<trans-unit id="select.option.1">
+				<source>T3Planet</source>
+			</trans-unit>
+			<trans-unit id="select.option.2">
+				<source>NITSAN</source>
+			</trans-unit>
+			<trans-unit id="checkbox.option.1">
+				<source>Include hidden data</source>
+			</trans-unit>
+			<trans-unit id="checkbox.option.2">
+				<source>Include deleted data</source>
+			</trans-unit>
+			<trans-unit id="filter-form.submit">
+				<source>Filter</source>
+			</trans-unit>
+			<trans-unit id="filter-form.reset">
+				<source>Reset</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

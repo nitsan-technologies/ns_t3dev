@@ -1,0 +1,63 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+
+<f:section name="content">
+    <f:if condition="!{validationResults.flattenedErrors}">
+        <f:flashMessages />
+    </f:if>
+    <div class="container">
+        <f:link.action action="new" class="btn btn-secondary"><f:translate key="new.record" /></f:link.action>
+
+        <div class="my-4">
+
+        </div>
+        <h1 class="text-center"><f:translate key="record.listing" /></h1>
+        <div class="m-5">
+            <f:render partial="ProductArea/Filter" arguments="{pagination: pagination.pagination, paginator: pagination.paginator, actionName: 'listForDatabase',filterData:filterData, includeHidden:'true'}" />
+        </div>
+        <f:flashMessages />
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border product-loader mb-5 mt-5 d-none" role="status">
+                <span class="sr-only"><f:translate key="loader.text" /></span>
+            </div>
+        </div>
+        <div class="product-items">
+
+            <div class="mb-2">
+                <f:if condition="{count}"><h3><f:translate key="record.total" /> {count}</h3></f:if>
+            </div>
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                <f:if condition="{productAreas}">
+                    <f:then>
+                        <f:for each="{productAreas}" as="product" iteration="iterator">
+                            <div class="col my-2">
+                                <div class="card" style="width: 18rem;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{product.name}<span class="mx-3 badge badge-secondary">{product.type}</span></h5>
+                                        <p class="card-text">
+                                            <f:format.html>{product.description -> f:format.crop(maxCharacters: 100)}</f:format.html>
+                                        </p>
+                                        <f:if condition="{settings.detailPageId}">
+                                            <f:link.action action="show" pageUid="{settings.detailPageId}" arguments="{productArea:product}" pluginName="Show">
+                                                <f:translate key="record.details" />
+                                            </f:link.action>
+                                        </f:if>
+                                    </div>
+                                </div>
+                            </div>
+                        </f:for>
+                    </f:then>
+                    <f:else>
+                        <div class="container">
+                            <h5 class="text-center"><f:translate key="record.no-record" /></h5>
+                        </div>
+                    </f:else>
+                </f:if>
+
+            </div>
+
+        </div>
+        <f:render partial="ProductArea/Pagination" arguments="{pagination: pagination.pagination, paginator: pagination.paginator, actionName: 'list'}" />
+    </div>
+</f:section>
+</html>

@@ -6,6 +6,16 @@
 	<f:form.textfield property="name" id="name" class="form-control" required="true" additionalAttributes="{data-pristine-required-message:'Please enter name'}"/>
 </div>
 <div class="form-group-custom">
+    <label for="name">
+        <f:translate key="product.type" />
+    </label>
+    <f:form.select class="form-control" property="type" required="true" additionalAttributes="{data-pristine-required-message:'Please select type'}">
+        <f:form.select.option value=""><f:translate key="select.option" /></f:form.select.option>
+        <f:form.select.option value="T3Planet"><f:translate key="select.option.1" /></f:form.select.option>
+        <f:form.select.option value="NITSAN"><f:translate key="select.option.2" /></f:form.select.option>
+    </f:form.select>
+</div>
+<div class="form-group-custom">
 	<label for="image">
 		<f:translate key="tx_nst3dev_domain_model_productarea.image" />
 	</label>

@@ -2,17 +2,23 @@
 <f:layout name="Default" />
 
 <f:section name="content">
+
     <f:render partial="FlashMessages"/>
+
     <f:if condition="!{validationResults.flattenedErrors}">
       <f:flashMessages />
     </f:if>
     <div class="container">
-        <f:link.action action="new"><f:translate key="new.record" /></f:link.action>
-        <h1><f:translate key="record.listing" /></h1>
+        <f:link.action action="new" class="btn btn-secondary"><f:translate key="new.record" /></f:link.action>
+
+        <div class="my-4">
+            <f:render partial="ProductArea/Filter" arguments="{pagination: pagination.pagination, paginator: pagination.paginator, actionName: 'list',filterData:filterData}" />
+        </div>
+        <h1 class="text-center"><f:translate key="record.listing" /></h1>
         <f:flashMessages />
         <div class="d-flex justify-content-center">
             <div class="spinner-border product-loader mb-5 mt-5 d-none" role="status">
-                <span class="sr-only">Loading...</span>
+                <span class="sr-only"><f:translate key="loader.text" /></span>
             </div>
         </div>
         <div class="product-items">
@@ -21,12 +27,13 @@
                     <div class="row g-0">
                         <div class="col-md-4">
                             <f:if condition="{product.image}">
-                                <f:image image="{product.image.0}" class="img-fluid rounded-start" alt="image" />
+                                <f:image image="{product.image.0}" class="img-fluid rounded-start m-1" alt="image" width="200px" height="200px"/>
                             </f:if>
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
-                                <h5 class="card-title">{product.name}</h5>
+                                <h5 class="card-title">{product.name}<span class="mx-3 badge badge-secondary">{product.type}</span></h5>
+
                                 <p class="card-text">
                                     <f:format.html>{product.description -> f:format.crop(maxCharacters: 100)}</f:format.html>
                                 </p>
@@ -39,11 +46,11 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
-                            <f:link.action action="edit" pageUid="{settings.editPageId}" arguments="{productArea:product}">
+                        <div class="col-md-12 my-2 d-flex justify-content-center">
+                            <f:link.action action="edit" class="btn btn-outline-success" pageUid="{settings.editPageId}" arguments="{productArea:product}">
                                 <f:translate key="record.edit" />
                             </f:link.action>
-                            <f:link.action action="delete" pageUid="{settings.editPageId}" arguments="{productArea:product}"
+                            <f:link.action action="delete" class="btn btn-outline-danger mx-3" pageUid="{settings.editPageId}" arguments="{productArea:product}"
                                            onclick="return confirm('Are you sure to delete?')">
                                 <f:translate key="record.remove" />
                             </f:link.action>

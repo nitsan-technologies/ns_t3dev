@@ -28,6 +28,15 @@ mod {
                     list_type = nst3dev_validation
                 }
             }
+            ExampleForDBAL {
+                iconIdentifier = ns_t3dev-plugin-ExampleForDBAL
+                title = LLL:EXT:ns_t3dev/Resources/Private/Language/locallang_db.xlf:tx_ns_t3dev_examplefordbal.name
+                description = LLL:EXT:ns_t3dev/Resources/Private/Language/locallang_db.xlf:tx_ns_t3dev_examplefordbal.description
+                tt_content_defValues {
+                    CType = list
+                    list_type = nst3dev_examplefordbal
+                }
+            }
         }
         show = *
     }

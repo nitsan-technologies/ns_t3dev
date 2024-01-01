@@ -7,11 +7,11 @@
 <f:form.textbox property="email" />
 ```
 
-* If you want to load the script in fluid template, then load the script file using 
+* If you want to load the script in fluid template, then load the script file using
 ```sh
-<f:asset.script identifier="customJS"><script type="text/javascript">alert("XSS");</script></f:asset.script>
+<f:asset.script identifier="customJS">alert("XSS");</f:asset.script>
 ```
-instead of this 
+instead of this
 ```sh
 <script type="text/javascript">alert("XSS");</script>
 ```

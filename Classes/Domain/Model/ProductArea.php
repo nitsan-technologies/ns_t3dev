@@ -56,6 +56,13 @@ class ProductArea extends AbstractEntity
     protected bool $hidden = false;
 
     /**
+     * slug
+     *
+     * @var string
+     */
+    protected string $type = '';
+
+    /**
      * Returns the name
      *
      * @return string|null
@@ -164,5 +171,15 @@ class ProductArea extends AbstractEntity
     public function getHidden(): bool
     {
         return $this->hidden;
+    }
+
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): void
+    {
+        $this->type = $type;
     }
 }
