@@ -1,5 +1,11 @@
 {
+  "name": "Your Project",
   "theme": "mint",
+  "colors": {
+    "primary": "#22c55e",
+    "light": "#ffffff",
+    "dark": "#0b1221"
+  },
   "navigation": {
     "groups": [
       {
