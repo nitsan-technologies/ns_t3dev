@@ -13,7 +13,8 @@
         "pages": [
           "index",
           "quickstart",
-          "installation"
+          "installation",
+          "typo3"
         ]
       },
       {
