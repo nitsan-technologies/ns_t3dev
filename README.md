@@ -6,6 +6,8 @@
 
 ---
 
+### 📚 [Extbase Code Bank](CodeBank/Index.md)
+
 # Documentation
 
 * [Documentation of Security Guidelines](Documentation/SecurityGuidelines/Guidelines.md)
@@ -16,3 +18,4 @@
 * [How to use logger](Documentation/Logging/Logging.md)
 * [How to Register/Implement a service](Documentation/Service/Service.md)
 * [Documentation of Database (Doctrine DBAL)](Documentation/DoctrineDBAL/DoctrineDBAL.md)
+
