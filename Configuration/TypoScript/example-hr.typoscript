@@ -1,0 +1,135 @@
+# Example 1
+
+page = PAGE
+page {
+  typeNum = 0
+
+  10 = TEXT
+  10 {
+    value = Hello world
+    stdWrap {
+      typolink {
+        parameter = http://www.typo3.org/
+        additionalParams = &parameter=value
+
+        # The function name "ATagParams" does not use the standardized
+        # "camelCase".
+        ATagParams = class="externalwebsite"
+
+        extTarget = _blank
+        title = The website of TYPO3
+      }
+
+      postCObject = TEXT
+      postCObject {
+        value = Body Text 1
+        stdWrap.wrap (
+                  |, Body Text 2.
+        )
+      }
+    }
+  }
+}
+
+# Example 2
+
+page = PAGE
+page {
+  10 = TEXT
+  10.value = <div class="myTodo">TODO: Add Fluid template </div>
+  jsFooterInline {
+    10 = TEXT
+    10.value (
+      alert("Hello World! ");
+    )
+  }
+  includeJSFooter {
+    jquery = https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js
+  }
+}
+
+
+# Example 3
+page = PAGE
+page.typeNum = 0
+
+# The CONTENT object executes a database query and loads the content.
+page.10 = CONTENT
+page.10.table = tt_content
+page.10.select {
+
+  # "sorting" is a column from the tt_content table and
+  # keeps track of the sorting order, which was specified in
+  # the backend.
+  orderBy = sorting
+
+  # Only select content from column "0" (the column called
+  # "normal") and quote the database identifier (column name)
+  # "colPos" (indicated by wrapping with {#})
+  where = {#colPos}=0
+}
+
+# For every result line from the database query (that means for every content
+# element) the renderObj is executed and the internal data array is filled
+# with the content. This ensures that we can call the .field property and we
+# get the according value.
+page.10.renderObj = COA
+page.10.renderObj {
+
+  10 = TEXT
+
+  # The field tt_content.header normally holds the headline.
+  10.stdWrap.field = header
+
+  10.stdWrap.wrap = <h1>|</h1>
+
+  20 = TEXT
+
+  # The field tt_content.bodytext holds the content text.
+  20.stdWrap.field = bodytext
+
+  20.stdWrap.wrap = <p>|</p>
+}
+
+
+# Example 4
+
+page = PAGE
+page {
+  10 = FLUIDTEMPLATE
+  10 {
+    template = TEXT
+    template.value (
+      <header>
+        <ul class="navbar-nav">
+            <f:for each="{myMainMenu}" as="menuItem">
+                <li class="nav-item">
+                    <a class="nav-link {f:if(condition: menuItem.active, then:'active')}"
+                       href="{menuItem.link}"
+                       target="{menuItem.target}"
+                       title="{menuItem.title}">
+                       {menuItem.title}
+                    </a>
+                </li>
+            </f:for>
+        </ul>
+      </header>
+      <main>
+        <p>Hello World!</p>
+      </main>
+    )
+    dataProcessing {
+      10 = menu
+      10.as = myMainMenu
+    }
+  }
+  20 = IMAGE
+  20 {
+    file = fileadmin/user_upload/5907.jpg
+    file.width = 200
+    file.params = -rotate 90
+  }
+}
+
+
+# Example 5
