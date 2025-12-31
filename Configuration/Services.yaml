@@ -4,3 +4,9 @@ services:
       - name: event.listener
         identifier: 'FrontendRendring'
         event: NITSAN\NsT3dev\Event\FrontendRendringEvent
+
+  NITSAN\NsT3dev\Command\GreetCommand:
+    tags:
+      - name: 'console.command'
+        command: 'greet:user'
+        schedulable: true
